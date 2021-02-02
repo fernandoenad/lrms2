@@ -1,4 +1,8 @@
-@extends('layouts.home')
+@if(strpos(Route::currentRouteName(), 'admin') != '')
+    @extends('layouts.admin')
+@else 
+    @extends('layouts.my')
+@endif
 
 @section('content')
 <div class="row mb-4">

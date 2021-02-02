@@ -49,6 +49,15 @@
 						</a>
 					</li> 
 
+					<li class="nav-item 
+						@if(strpos(Route::currentRouteName(), 'content') != '') {{ 'menu-open' }} @endif">
+						
+						<a href="{{ route('content') }}" class="nav-link">
+							<i class="nav-icon fas fa-photo-video"></i>
+							<p>LR Contents</p>
+						</a>
+					</li> 
+
 					<li class="nav-item">
 						<a href="" class="nav-link" onClick="alert('Feature not yet available!'); return false;">
 							<i class="nav-icon fas fa-list"></i>

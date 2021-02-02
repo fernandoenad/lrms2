@@ -2,6 +2,9 @@
     <li class="nav-item">
         <a class="nav-link" href="{{ route('login') }}">Login</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('support') }}">Help</a>
+    </li>
 @else
     <li class="nav-item dropdown user-menu">
         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">

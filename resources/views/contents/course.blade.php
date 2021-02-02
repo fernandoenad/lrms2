@@ -1,16 +1,16 @@
-@extends('layouts.home')
+@extends('layouts.my')
 
 @section('content')
 <div class="row mb-4">
     <div class="col-sm-6">
-        <h1 class="m-0 text-dark">{{ $course->name }}</h1>
+        <h1 class="m-0 text-dark">Contents</h1>
     </div>
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('home.category.show', $category->id) }}">{{ $category->name }}</a></li>
-            <li class="breadcrumb-item active">{{ $course->name }}</li>
+            <li class="breadcrumb-item"><a href="{{ route('content') }}">LR Categories</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('content.category.show', $category->id) }}">Courses</a></li>
+            <li class="breadcrumb-item active">Contents</li>
         </ol>
     </div>
 </div>
@@ -20,10 +20,15 @@
         @if(sizeof($contents) > 0)
             @foreach($contents as $content)
                 <div class="callout @if($contents->first()->id == $content->id) {{ 'callout-info' }} @endif">
-                    <span class="badge badge-success  float-right"><small>Uploaded on {{ date('M d, Y', strtotime($content->created_at)) ?? '' }}</small></span>
+                    <span class="badge badge-success  float-right">
+                        <small>Uploaded on {{ date('M d, Y', strtotime($content->created_at)) ?? '' }}</small>
+                    </span>
+                    <span class="badge badge-success  float-right">
+                        <small>Updated on {{ date('M d, Y', strtotime($content->updated_at)) ?? '' }}</small>
+                    </span>
                     <h5>{{ $content->name ?? '' }}</h5>
                     <span class="float-right">
-                        <a href="{{ route('home.content.download', $content->id) }}">
+                        <a href="{{ asset('storage/' . $content->attachment) }}" download>
                             Download</a>
                         &nbsp;({{ $content->join('downloads', 'contents.id', '=', 'downloads.content_id')
                                 ->where('contents.id', '=', $content->id)
@@ -46,7 +51,7 @@
     </div> 
 
     <div class="col-md-4">
-        @include('home._courses')
+        @include('contents._courses')
     </div>
 </div>
 @endsection

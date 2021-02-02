@@ -7,7 +7,7 @@
     </div>
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
             <li class="breadcrumb-item active">Overview</li>
         </ol>
     </div>
@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="info-box">
-                    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-photo-video"></i></span>
+                    <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-photo-video"></i></span>
 
                     <div class="info-box-content">
                         <span class="info-box-text">Contents</span>
@@ -31,10 +31,10 @@
 
             <div class="col-md-4">
                 <div class="info-box">
-                    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-list"></i></span>
+                    <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-list"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">LR Inventory</span>
+                        <span class="info-box-text">Inventories</span>
                         <span class="info-box-number">
                             {{ number_format($inventories_c, 0) }}
                         </span>
@@ -44,7 +44,7 @@
 
             <div class="col-md-4">
                 <div class="info-box">
-                    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-users"></i></span>
+                    <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-users"></i></span>
 
                     <div class="info-box-content">
                         <span class="info-box-text">Users</span>
@@ -56,57 +56,88 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-md-12">
+                @if(session('error'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ session('error') }}
+                    </div>
+                @endif
+                @if(session('status'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
+                @endif
+            </div>
+        </div>
+
         <div class="card card-outline card-primary">
             <div class="card-header border-transparent">
-                Latest Content Uploads
+                Recently Uploaded Contents
             </div>
 
             <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table m-0">
+                    <table class="table m-0 table-hover">
                         <thead>
                             <tr>
-                                <th width="40%">Name</th>
+                                <th>Content</th>
                                 <th>Uploaded by</th>
-                                <th>Uploaded on</th>
-                                <th class="text-right">Download Count</th>
+                                <th>Status / Visibility</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @if(sizeof($contents_f) > 0)
                                 @foreach($contents_f as $content)
                                     <tr>
-                                        <td>
-                                            <strong>{{ $content->name ?? '' }}</strong>
+                                        <td title="{{ $content->description ?? '' }}">
+                                            <a href="{{ route('admin.contents.show', $content->id) }}">
+                                                <strong>{{ $content->name ?? '' }}</strong>
+                                            </a>
                                             <br>
-                                            <small>{{ $content->description ?? '' }}</small>
+                                            {{ $content->course->name ?? '' }} / 
+                                            {{ $content->course->category->name ?? '' }}
                                         </td>
-                                        <td>{{ $content->user->name ?? '' }}</td>
-                                        <td>{{ date('F d, Y', strtotime($content->created_at)) ?? '' }}</td>
-                                        <td class="text-right">{{ $content->download->count() }}</td>
+                                        <td>
+                                            {{ $content->user->name ?? '' }}
+                                            <br>
+                                            <span class="badge badge-info">{{ date('M d, Y h:ia', strtotime($content->created_at)) ?? '' }}</span>
+                                        </td>
+                                        <td>
+                                            {{ $content->getStatus($content->status) ?? '' }}
+                                            <br>
+                                            {{ $content->getVisibility($content->visibility) ?? '' }}
+                                        </td>
+                                        <td></td>
                                     </tr>
                                 @endforeach
-                            @else
-                                <tr><td colspan="3">No record found.</td></tr>
                             @endif
                         </tbody>
                     </table>
                 </div>            
             </div>
+
+            <div class="card-footer">
+                <span class="float-right"><a href="{{ route('admin.contents') }}">View all</a></span>
+            </div>
         </div>
     </div>
 
     <div class="col-md-3">
-        <div class="card card-outline card-primary">
-            <div class="card-header">Welcome</div>
+        <div class="card">
+            <div class="card-header">Welcome to the Admin Portal</div>
 
             <div class="card-body">
                 <p>
-                    <strong>LRMS Admin Portal</strong> allows you to manage
-                    the application to suit your needs.
+                    The <strong>LRMS Admin Portal</strong> allows you to manage the application 
+                    including but not limited to Content, User, and Report
+                    Management. 
                 </p>
+
                 <p>
-                    To get started, click on any menu items found on the left panel.
+                    To begin, click on any of the menu items found on the 
+                    left side-bar. 
                 </p>
             </div>
         </div>

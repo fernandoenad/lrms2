@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Home;
+namespace App\Http\Controllers\My;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -10,8 +10,10 @@ use App\Models\Content;
 use App\Models\Download;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 
-class HomeController extends Controller
+class ContentController extends Controller
 {
     public function __construct()
     {
@@ -22,7 +24,7 @@ class HomeController extends Controller
     {
         $categories = $this->getCategories()->get();
 
-        return view('home.categories', compact('categories'));
+        return view('contents.index', compact('categories'));
     }
 
     public function getCategories()
@@ -35,10 +37,13 @@ class HomeController extends Controller
 
     public function showCategory(Category $category)
     {
+        if($category->visibility != 1)
+            return redirect()->route('content');
+
         $categories = $this->getCategories()->get();
         $courses = $this->getCourses($category)->get();
 
-        return view('home.courses', compact('categories', 'category', 'courses'));
+        return view('contents.category', compact('categories', 'category', 'courses'));
     }
 
     public function getCourses(Category $category)
@@ -52,35 +57,41 @@ class HomeController extends Controller
 
     public function showCourse(Category $category, Course $course)
     {
+        if($course->visibility != 1)
+            return redirect()->route('content.category.show', compact('category'));
+
         $categories = $this->getCategories()->get();
         $courses = $this->getCourses($category)->get();
         $contents = $this->getcontents($course)->get();
 
-        return view('home.course', compact('categories', 'category', 'courses', 'course', 'contents'));
+        return view('contents.course', compact('categories', 'category', 'courses', 'course', 'contents'));
     }
 
     public function getContents(Course $course)
     {
         $contents = Content::where('course_id', '=', $course->id)
-        ->where('status', '=', 1)
+        ->where('status', '=', 3)
         ->where('visibility', '=', 1)
         ->orderBy('sort', 'asc');
 
         return $contents;
     }
 
-    public function download(Content $content)
-    {
-        $user = Auth::user();
-
-        Download::create([
-            'content_id' => $content->id,
-            'user_id' => $user->id,
+    public function download($id)
+    {       
+        
+        $content = Content::find($id);
+        $download = Download::create([
+            'content_id' => $id,
+            'user_id' => Auth::user()->id,
             ]);
         
-        $filePath = 'storage/'.$content->attachment;
-        return response()->download($filePath);    
-        return redirect()->back();
+        $file = Storage::disk('public')->path($content->attachment);
+        $file_info = pathinfo($file);
+        $file_ext = $file_info['extension'];
+        $file_download = Storage::disk('public')->download($content->attachment, $content->name . '.' . $file_ext);
+
+        return $file_download;               
     }
 
 }

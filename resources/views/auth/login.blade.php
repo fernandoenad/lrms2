@@ -1,4 +1,4 @@
-@extends('layouts.home')
+@extends('layouts.my')
 
 @section('content')
 <div class="row d-flex justify-content-center">			
@@ -71,7 +71,7 @@
 							</div>
 						</div>
 
-						@error('username')
+						@error('password')
 							<span class="invalid-feedback" role="alert">
 								<strong>{{ $message }}</strong>
 							</span>

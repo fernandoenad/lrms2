@@ -63,6 +63,11 @@ class User extends Authenticatable
         return $this->hasMany(Download::class);
     }
 
+    public function contentlog()
+    {
+        return $this->hasMany(ContentLog::class);
+    }
+
     public function role()
     {
         return $this->hasOne(Role::class);

@@ -41,41 +41,49 @@
 						</a>
 					</li> 
 
+					@if(Auth::user()->role == 3)	
                     <li class="nav-item">
 						<a href="" class="nav-link" onClick="alert('Feature not yet available!'); return false;">
 							<i class="nav-icon fas fa-swatchbook"></i>
 							<p>My Content</p>
 						</a>
 					</li>
+					@endif
 
-                    <li class="nav-item">
-						<a href="" class="nav-link" onClick="alert('Feature not yet available!'); return false;">
-							<i class="nav-icon fas fa-photo-video"></i>
-							<p>Content Mgmt</p>
-						</a>
-					</li> 
+					@if(Auth::user()->role < 3)	
+						<li class="nav-item
+							@if(strpos(Route::currentRouteName(), 'admin.contents') != '' ||
+								strpos(Route::currentRouteName(), 'admin.categories') != '' ||
+								strpos(Route::currentRouteName(), 'admin.courses') != ''
+								) {{ 'menu-open' }} @endif">
+							<a href="{{ route('admin.contents') }}" class="nav-link">
+								<i class="nav-icon fas fa-photo-video"></i>
+								<p>Content Mgmt</p>
+							</a>
+						</li> 
 
-                    <li class="nav-item">
-						<a href="" class="nav-link" onClick="alert('Feature not yet available!'); return false;">
-							<i class="nav-icon fas fa-list"></i>
-							<p>Inventory Mgmt</p>
-						</a>
-					</li> 
+						<li class="nav-item">
+							<a href="" class="nav-link" onClick="alert('Feature not yet available!'); return false;">
+								<i class="nav-icon fas fa-list"></i>
+								<p>Inventory Mgmt</p>
+							</a>
+						</li> 
 
-                    <li class="nav-item 
-						@if(strpos(Route::currentRouteName(), 'admin.users') != '') {{ 'menu-open' }} @endif">
-						<a href="{{ route('admin.users')}}" class="nav-link">
-							<i class="nav-icon fas fa-users"></i>
-							<p>User Mgmt</p>
-						</a>
-					</li> 
+						<li class="nav-item 
+							@if(strpos(Route::currentRouteName(), 'admin.users') != '') {{ 'menu-open' }} @endif">
+							<a href="{{ route('admin.users')}}" class="nav-link">
+								<i class="nav-icon fas fa-users"></i>
+								<p>User Mgmt</p>
+							</a>
+						</li> 
 
-                    <li class="nav-item">
-						<a href="" class="nav-link" onClick="alert('Feature not yet available!'); return false;">
-							<i class="nav-icon fas fa-sliders-h"></i>
-							<p>Site Settings</p>
-						</a>
-					</li> 
+						<li class="nav-item">
+							<a href="" class="nav-link" onClick="alert('Feature not yet available!'); return false;">
+								<i class="nav-icon fas fa-sliders-h"></i>
+								<p>Site Settings</p>
+							</a>
+						</li> 
+					@endif
 				</ul>
 			</nav>
 		</div>

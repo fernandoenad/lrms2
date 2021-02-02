@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Content;
+use App\Models\User;
 
 class AdminController extends Controller
 {
@@ -21,16 +22,14 @@ class AdminController extends Controller
             ->get();
         $contents_c = $contents->count();        
         $inventories_c = $this->getInventoryList();
-        $users_c = $this->getUserList();
+        $users_c = $this->getUserList()->count();
 
         return view('admin.index', compact('contents_c', 'inventories_c', 'users_c', 'contents_f'));
     }
 
     public function getContentList()
     {
-        $contents = Content::where('status', '=', 1)
-        ->where('visibility', '=', 1)
-        ->orderBy('sort', 'asc');
+        $contents = Content::orderBy('id', 'desc');
 
         return $contents;
     }
@@ -44,7 +43,8 @@ class AdminController extends Controller
 
     public function getUserList()
     {
-        $users = 0;
+        $users = User::orderBy('role', 'asc')
+            ->orderBy('name', 'asc');
 
         return $users;        
     }

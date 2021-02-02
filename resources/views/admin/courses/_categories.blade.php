@@ -10,12 +10,12 @@
                     @foreach($categories as $categoryItem)
                         <tr>
                             <td class="@if($category->id == $categoryItem->id) {{ 'bg-primary'}} @endif">
-                                <a href="{{ route('home.category.show', $categoryItem->id) }}">
+                                <a href="{{ route('admin.courses', $categoryItem->id) }}">
                                     <strong>{{ $categoryItem->name ?? '' }}</strong>
                                     <span class="badge badge-success float-right">
-                                        {{ $category->join('courses', 'categories.id', '=', 'courses.category_id')
-                                            ->join('contents', 'courses.id', '=', 'contents.course_id')
-                                            ->where('categories.id', '=', $categoryItem->id)
+                                        {{ $category->join('courses', 'categories.id', '=', 'courses.category_id') 
+                                            ->where('courses.category_id', '=', $categoryItem->id)
+                                            ->where('courses.visibility', '=', 1)
                                             ->count() ?? '' }}
                                     </span>
                                 </a>

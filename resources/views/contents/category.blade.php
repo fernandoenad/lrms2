@@ -1,26 +1,26 @@
-@extends('layouts.home')
+@extends('layouts.my')
 
 @section('content')
 <div class="row mb-4">
     <div class="col-sm-6">
-        <h1 class="m-0 text-dark">{{ $category->name }}</h1>
+        <h1 class="m-0 text-dark">Courses</h1>
     </div>
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('home') }}">Categories</a></li>
-            <li class="breadcrumb-item active">{{ $category->name }}</li>
+            <li class="breadcrumb-item"><a href="{{ route('content') }}">LR Categories</a></li>
+            <li class="breadcrumb-item active">Courses</li>
         </ol>
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-3">
-        @include('home._categories')
+        @include('contents._categories')
     </div>
 
     <div class="col-md-9">
-        <div class="card">
+        <div class="card card-outline card-primary">
             <div class="card-header">
                 Course List of <strong>{{ $category->name }}</strong>
             </div>
@@ -39,16 +39,28 @@
                             @foreach($courses as $course)
                                 <tr>
                                     <td>
-                                        <a href="{{ route('home.course.show', [$category->id, $course->id]) }}">
+                                        <a href="{{ route('content.course.show', [$category->id, $course->id]) }}">
                                             <strong>{{ $course->name ?? '' }}</strong>
                                         </a>
                                     </td>
-                                    <td class="text-right">{{ $course->content->count() }}</td>
                                     <td class="text-right">
                                         {{ $course->join('contents', 'courses.id', '=', 'contents.course_id')
-                                            ->join('downloads', 'contents.id', '=', 'downloads.content_id')
                                             ->where('courses.id', '=', $course->id)
+                                            ->where('contents.status', '=', 3)
+                                            ->where('contents.visibility', '=', 1)
                                             ->count() ?? '' }}
+                                    </td>
+                                    <td class="text-right">
+                                        @if(isset($course->first()->content()->first()->download))
+                                            {{ $course->join('contents', 'courses.id', '=', 'contents.course_id')
+                                                ->join('downloads', 'contents.id', '=', 'downloads.content_id')
+                                                ->where('courses.id', '=', $course->id)
+                                                ->where('contents.status', '=', 3)
+                                                ->where('contents.visibility', '=', 1)
+                                                ->count() ?? '' }}
+                                        @else
+                                            {{ '0' }}
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

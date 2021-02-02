@@ -1,21 +1,21 @@
-@extends('layouts.home')
+@extends('layouts.my')
 
 @section('content')
 <div class="row mb-4">
     <div class="col-sm-6">
-        <h1 class="m-0 text-dark">Categories</h1>
+        <h1 class="m-0 text-dark">LR Categories</h1>
     </div>
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">Categories</li>
+            <li class="breadcrumb-item active">LR Categories</li>
         </ol>
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-8">
-        <div class="card">
+        <div class="card card-outline card-primary">
             <div class="card-header">
                 Category List
             </div>
@@ -35,27 +35,32 @@
                             @foreach($categories as $category)
                                 <tr>
                                     <td>
-                                        <a href="{{ route('home.category.show', $category->id) }}">
+                                        <a href="{{ route('content.category.show', $category->id) }}">
                                             <strong>{{ $category->name ?? '' }}</strong>
                                         </a>
                                     </td>
-                                    <td class="text-right">{{ $category->course->count() ?? '' }}</td>
+                                    <td class="text-right">
+                                        {{ $category->join('courses', 'categories.id', '=', 'courses.category_id') 
+                                            ->where('courses.category_id', '=', $category->id)
+                                            ->where('courses.visibility', '=', 1)
+                                            ->count() ?? '' }}
+                                    </td>
                                     <td class="text-right">
                                         {{ $category->join('courses', 'categories.id', '=', 'courses.category_id')
                                             ->join('contents', 'courses.id', '=', 'contents.course_id')
                                             ->where('categories.id', '=', $category->id)
+                                            ->where('contents.status', '=', 3)
+                                            ->where('contents.visibility', '=', 1)
                                             ->count() ?? '' }}
                                     </td>
                                     <td class="text-right">
-                                        @if(isset($category->course->first()->content()->first()->download))
-                                            {{ $category->join('courses', 'categories.id', '=', 'courses.category_id')
-                                                ->join('contents', 'courses.id', '=', 'contents.course_id')
-                                                ->join('downloads', 'contents.id', '=', 'downloads.content_id')
-                                                ->where('categories.id', '=', $category->id)
-                                                ->count() ?? '' }}
-                                        @else
-                                            {{ '0' }}
-                                        @endif
+                                        {{ $category->join('courses', 'categories.id', '=', 'courses.category_id')
+                                            ->join('contents', 'courses.id', '=', 'contents.course_id')
+                                            ->join('downloads', 'contents.id', '=', 'downloads.content_id')
+                                            ->where('categories.id', '=', $category->id)
+                                            ->where('contents.status', '=', 3)
+                                            ->where('contents.visibility', '=', 1)
+                                            ->count() ?? '' }}
                                     </td>
                                 </tr>
                             @endforeach
@@ -66,14 +71,14 @@
                 </table>
             </div>
 
-            <div class="card-footer">
+            <div class="card-footer p-0">
                 <small class="float-right"></small>
             </div>
         </div>
     </div>
 
     <div class="col-md-4">
-        <div class="card card-outline card-primary">
+        <div class="card">
             <div class="card-header">Welcome</div>
 
             <div class="card-body">
