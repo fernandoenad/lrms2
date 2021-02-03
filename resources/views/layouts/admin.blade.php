@@ -105,7 +105,12 @@
 						</li> 
 
 						<li class="nav-item 
-							@if(strpos(Route::currentRouteName(), 'admin.users') != '') {{ 'menu-open' }} @endif">
+							@if(Route::currentRouteName() == 'admin.users' || 
+								Route::currentRouteName() == 'admin.users.edit' ||
+								Route::currentRouteName() == 'admin.users.disable' ||
+								Route::currentRouteName() == 'admin.users.reset'
+							) 
+								{{ 'menu-open' }} @endif">
 							<a href="{{ route('admin.users')}}" class="nav-link">
 								<i class="nav-icon fas fa-users"></i>
 								<p>User Mgmt</p>
