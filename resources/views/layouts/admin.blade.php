@@ -74,6 +74,11 @@
 								Route::currentRouteName() == 'admin.categories.move-up' ||
 								Route::currentRouteName() == 'admin.categories.move-down' ||
 
+								Route::currentRouteName() == 'admin.courses.allshown' || 
+								Route::currentRouteName() == 'admin.courses.allhidden' || 
+								Route::currentRouteName() == 'admin.courses.allsearch' || 
+								Route::currentRouteName() == 'admin.courses.show' || 
+
 								Route::currentRouteName() == 'admin.courses' ||
 								Route::currentRouteName() == 'admin.courses.search' || 
 								Route::currentRouteName() == 'admin.courses.create' ||

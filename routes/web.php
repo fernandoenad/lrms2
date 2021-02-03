@@ -76,6 +76,12 @@ Route::middleware(['active'])->group(function () {
         Route::get('/admin/categories/{category}/move-up', [App\Http\Controllers\Admin\CategoryController::class, 'moveup'])->name('admin.categories.move-up');
         Route::get('/admin/categories/{category}/move-down', [App\Http\Controllers\Admin\CategoryController::class, 'movedown'])->name('admin.categories.move-down');
 
+        Route::get('/admin/courses/allshown', [App\Http\Controllers\Admin\CourseController::class, 'all'])->name('admin.courses.allshown');
+        Route::get('/admin/courses/allhidden', [App\Http\Controllers\Admin\CourseController::class, 'all'])->name('admin.courses.allhidden');
+        Route::any('/admin/courses/allsearch', [App\Http\Controllers\Admin\CourseController::class, 'allsearch'])->name('admin.courses.allsearch');
+
+        Route::any('/admin/course/{course}', [App\Http\Controllers\Admin\CourseController::class, 'show'])->name('admin.courses.show');
+
         Route::get('/admin/courses/{category}/create', [App\Http\Controllers\Admin\CourseController::class, 'create'])->name('admin.courses.create');
         Route::any('/admin/courses/{category}/search', [App\Http\Controllers\Admin\CourseController::class, 'search'])->name('admin.courses.search');
         Route::get('/admin/courses/{category}/shown', [App\Http\Controllers\Admin\CourseController::class, 'displaycourses'])->name('admin.courses.shown');
@@ -86,7 +92,6 @@ Route::middleware(['active'])->group(function () {
         Route::patch('/admin/courses/{category}/{course}', [App\Http\Controllers\Admin\CourseController::class, 'update'])->name('admin.courses.update');
         Route::get('/admin/courses/{category}/{course}/move-up', [App\Http\Controllers\Admin\CourseController::class, 'moveup'])->name('admin.courses.move-up');
         Route::get('/admin/courses/{category}/{course}/move-down', [App\Http\Controllers\Admin\CourseController::class, 'movedown'])->name('admin.courses.move-down');
-
     });
 
     Route::middleware(['personnel'])->group(function () {

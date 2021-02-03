@@ -53,8 +53,8 @@
                     <div class="info-box-content">
                         <span class="info-box-text">All Shown</span>
                         <span class="info-box-number">
-                            <a href="{{ route('admin.courses.shown', $category->id) }}">
-                                {{ number_format($shown_c, 0) }}
+                            <a href="{{ route('admin.courses.allshown') }}">
+                                {{ number_format(App\Models\Course::where('visibility', '=', 1)->get()->count(), 0) }}
                             </a>
                         </span>
                     </div>
@@ -68,8 +68,8 @@
                     <div class="info-box-content">
                         <span class="info-box-text">All Hidden</span>
                         <span class="info-box-number">
-                            <a href="{{ route('admin.courses.hidden', $category->id) }}">    
-                             {{ number_format($hidden_c, 0) }}
+                            <a href="{{ route('admin.courses.allhidden') }}">    
+                             {{ number_format(App\Models\Course::where('visibility', '=', 0)->get()->count(), 0) }}
                              </a>
                         </span>
                     </div>
@@ -305,7 +305,7 @@
                             <table class="table m-0 table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Category</th>
+                                        <th>Course</th>
                                         <th>Visibility</th>
                                         <th class="text-right">Contents #</th>
                                         <th width="30%"></th>
@@ -316,7 +316,7 @@
                                         @foreach($courses as $course)
                                             <tr>
                                                 <td>
-                                                    <a href="#" title="Owner: {{ $course->user->name ?? '' }}">
+                                                    <a href="{{ route('admin.courses.show', $course->id) }}" title="Owner: {{ $course->user->name ?? '' }}">
                                                         <strong>{{ $course->name ?? '' }}</strong>
                                                     </a>
                                                 </td>

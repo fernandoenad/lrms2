@@ -108,6 +108,26 @@
                 </li>
             @endif
 
+            @if(Route::currentRouteName() == 'admin.courses.allsearch' ||
+                Route::currentRouteName() == 'admin.courses.allshown' ||
+                Route::currentRouteName() == 'admin.courses.allhidden'
+                )
+                <li class="nnav-item active pt-2 pb-2 pr-3">
+                    <form class="form-inline ml-3" method="POST" action="{{ route('admin.courses.allsearch') }}">
+                    @csrf
+
+                    <div class="input-group input-group-md">
+                        <input class="form-control form-control-navbar" type="search" name="str" value="{{ request()->str }}" placeholder="Search course" aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    </form>
+                </li>
+            @endif
+
             <li class="nav-item">
                 <a href="#" class="nav-link">
                 </a>

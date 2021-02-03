@@ -30,7 +30,7 @@
         </table>
     </div>
 
-    <div class="card-footer">
+    <div class="card-footer p-0">
         <small class="float-right"></small>
     </div>
 </div>

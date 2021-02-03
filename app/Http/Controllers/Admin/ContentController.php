@@ -207,7 +207,14 @@ class ContentController extends Controller
             'sort' => $content->sort - ($content->sort <= 1 ? 0 : 2),
             ]);
 
-        return view('admin.contents.show', compact('contents', 'content', 'contentlogs'));
+        $route_name = request()->route()->getName();
+
+        if($route_name == 'admin.contents.show')
+            return view('admin.contents.show', compact('contents', 'content', 'contentlogs'));
+        else {   
+            $course = $content->course_id;
+            return redirect()->route('admin.courses.show', compact('course', 'contents'));
+        }
     }
 
     public function movedown(Content $content)
@@ -222,6 +229,13 @@ class ContentController extends Controller
             'sort' => $content->sort + 2,
             ]);
 
-        return view('admin.contents.show', compact('contents', 'content', 'contentlogs'));
+        $route_name = request()->route()->getName();
+
+        if($route_name == 'admin.contents.show')
+            return view('admin.contents.show', compact('contents', 'content', 'contentlogs'));
+        else {   
+            $course = $content->course_id;
+            return redirect()->route('admin.courses.show', compact('course', 'contents'));
+        }
     }
 }

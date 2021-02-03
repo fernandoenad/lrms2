@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Course;
 use App\Models\User;
+use App\Models\Content;
 use Illuminate\Validation\Rule;
 
 class CourseController extends Controller
@@ -143,7 +144,7 @@ class CourseController extends Controller
             'sort' => $course->sort - ($course->sort <= 1 ? 0 : 2),
             ]);
 
-            return view('admin.courses.index', compact('categories', 'category', 'courses', 'course', 'shown_c', 'hidden_c'));
+        return view('admin.courses.index', compact('categories', 'category', 'courses', 'course', 'shown_c', 'hidden_c'));
     }
 
     public function movedown(Category $category, Course $course)
@@ -157,6 +158,49 @@ class CourseController extends Controller
             'sort' => $course->sort + 2,
             ]);
 
-            return view('admin.courses.index', compact('categories', 'category', 'courses', 'course', 'shown_c', 'hidden_c'));
+        return view('admin.courses.index', compact('categories', 'category', 'courses', 'course', 'shown_c', 'hidden_c'));
+    }
+
+    public function all()
+    {
+        $route_name = request()->route()->getName();
+
+        if($route_name == 'admin.courses.allshown'){
+            $visibility = 1;
+        } else if ($route_name == 'admin.courses.allhidden'){
+            $visibility = 0;
+        } 
+
+        $courses = Course::where('visibility', '=', $visibility)
+            ->orderBy('name', 'asc')
+            ->paginate(15);
+
+        return view('admin.courses.all', compact('courses'));
+    }
+
+    public function allsearch()
+    {
+        $str = request()->str;
+
+        $courses = Course::join('categories', 'courses.category_id', '=', 'categories.id')
+            ->where('courses.name', 'like', $str . '%')
+            ->orWhere('categories.name', 'like', $str . '%')
+            ->orderBy('courses.name', 'asc')
+            ->select('courses.*')
+            ->paginate(15);
+
+        $courses = $courses->appends(['str' => $str]);
+
+        return view('admin.courses.all', compact('courses'));
+    }
+
+    public function show(Course $course)
+    {
+        $contents = Content::where('course_id', '=', $course->id)
+            ->orderBy('sort', 'asc')
+            ->paginate(15);;
+
+        return view('admin.courses.show', compact('course', 'contents'));
     }
 }
+

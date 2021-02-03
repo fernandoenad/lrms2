@@ -112,12 +112,12 @@
                             @if(sizeof($contents) > 0)
                                 @foreach($contents as $content)
                                 <tr>
-                                        <td title="{{ $content->description ?? '' }}">
-                                            <a href="{{ route('admin.contents.show', $content->id) }}">
+                                        <td>
+                                            <a href="{{ route('admin.contents.show', $content->id) }}" title="{{ $content->description ?? '' }}">
                                                 <strong>{{ $content->name ?? '' }}</strong>
                                             </a>
                                             <br>
-                                            <a href="">
+                                            <a href="{{ route('admin.courses.show', $content->course->id) }}">
                                                 {{ $content->course->name ?? '' }} 
                                             </a>
                                             / 
