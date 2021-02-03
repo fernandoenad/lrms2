@@ -140,7 +140,7 @@ class CourseController extends Controller
         $hidden_c = $this->getcourses($category, 0)->count();
 
         $course->update([
-            'sort' => $course->sort - 2,
+            'sort' => $course->sort - ($course->sort <= 1 ? 0 : 2),
             ]);
 
             return view('admin.courses.index', compact('categories', 'category', 'courses', 'course', 'shown_c', 'hidden_c'));

@@ -117,8 +117,13 @@
                                                 <strong>{{ $content->name ?? '' }}</strong>
                                             </a>
                                             <br>
-                                            {{ $content->course->name ?? '' }} / 
-                                            {{ $content->course->category->name ?? '' }}
+                                            <a href="">
+                                                {{ $content->course->name ?? '' }} 
+                                            </a>
+                                            / 
+                                            <a href="{{ route('admin.courses', $content->course->category->id) }}">
+                                                {{ $content->course->category->name ?? '' }}
+                                            </a>
                                         </td>
                                         <td>
                                             {{ $content->user->name ?? '' }}

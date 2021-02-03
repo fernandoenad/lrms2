@@ -33,9 +33,9 @@ class ContentController extends Controller
 
     public function getContents($status, $visibility)
     {
-        $contents = Content::where('status', 'like', $status)
-            ->where('visibility', 'like', $visibility)
-            ->orderBy('sort', 'asc');
+        $contents = Content::where('contents.status', 'like', $status)
+            ->where('contents.visibility', 'like', $visibility)
+            ->orderBy('contents.sort', 'asc');
         
         return $contents;
     }
@@ -73,8 +73,13 @@ class ContentController extends Controller
         $str = request()->str;
 
         $contents = $this->getContents('%', '%')
-            ->where('contents.name', 'like', $str . '%')
+            ->join('courses', 'contents.course_id', '=', 'courses.id')
+            ->join('categories', 'courses.category_id', '=', 'categories.id')
+            ->where('contents.name', 'like', '%' . $str . '%')
+            ->orWhere('courses.name', 'like', $str . '%')
+            ->orWhere('categories.name', 'like', $str . '%')
             ->orderBy('contents.name', 'asc')
+            ->select('contents.*')
             ->paginate(15);
         $new_c = $this->getContents(1, '%')->count();
         $pending_c = $this->getContents(2, '%')->count();
@@ -135,10 +140,13 @@ class ContentController extends Controller
 
     public function show(Content $content)
     {
+        $contents = Content::where('course_id', '=', $content->course_id)
+            ->orderBy('sort', 'asc')
+            ->get();
         $contentlogs = $content->contentlog()->orderBy('id', 'desc')
             ->get();
 
-        return view('admin.contents.show', compact('content', 'contentlogs'));
+        return view('admin.contents.show', compact('contents', 'content', 'contentlogs'));
     }
 
     public function edit(Content $content)
@@ -185,5 +193,35 @@ class ContentController extends Controller
         }        
 
         return redirect()->route('admin.contents.show', compact('content'))->with('status', 'Content was successfully updated.');
+    }
+
+    public function moveup(Content $content)
+    {
+        $contents = Content::where('course_id', '=', $content->course_id)
+            ->orderBy('sort', 'asc')
+            ->get();
+        $contentlogs = $content->contentlog()->orderBy('id', 'desc')
+            ->get();
+        
+        $content->update([
+            'sort' => $content->sort - ($content->sort <= 1 ? 0 : 2),
+            ]);
+
+        return view('admin.contents.show', compact('contents', 'content', 'contentlogs'));
+    }
+
+    public function movedown(Content $content)
+    {
+        $contents = Content::where('course_id', '=', $content->course_id)
+            ->orderBy('sort', 'asc')
+            ->get();
+        $contentlogs = $content->contentlog()->orderBy('id', 'desc')
+            ->get();
+        
+        $content->update([
+            'sort' => $content->sort + 2,
+            ]);
+
+        return view('admin.contents.show', compact('contents', 'content', 'contentlogs'));
     }
 }

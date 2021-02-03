@@ -3,7 +3,18 @@
 
     <div class="card-body p-0">
         <ul class="nav nav-pills flex-column">
-            @if(strpos(Route::currentRouteName(), 'admin.contents') != '')
+            @if(Route::currentRouteName() == 'admin.contents' ||
+                Route::currentRouteName() == 'admin.contents.show' ||
+                Route::currentRouteName() == 'admin.contents.edit' ||
+                Route::currentRouteName() == 'admin.contents.move-up' ||
+                Route::currentRouteName() == 'admin.contents.move-down' ||
+                Route::currentRouteName() == 'admin.contents.create' ||
+                Route::currentRouteName() == 'admin.contents.search' ||
+                Route::currentRouteName() == 'admin.contents.new' ||
+                Route::currentRouteName() == 'admin.contents.pending' ||
+                Route::currentRouteName() == 'admin.contents.approved' ||
+                Route::currentRouteName() == 'admin.contents.hidden' 
+                )
                 <li class="nnav-item active pt-2 pb-2 pr-3">
                     <form class="form-inline ml-3" method="POST" action="{{ route('admin.contents.search') }}">
                     @csrf
@@ -33,7 +44,15 @@
                 </li>
             @endif
 
-            @if(strpos(Route::currentRouteName(), 'admin.categories') != '')
+            @if(Route::currentRouteName() == 'admin.categories' ||
+                Route::currentRouteName() == 'admin.categories.edit' ||
+                Route::currentRouteName() == 'admin.categories.move-up' ||
+                Route::currentRouteName() == 'admin.categories.move-down' ||
+                Route::currentRouteName() == 'admin.categories.create' ||
+                Route::currentRouteName() == 'admin.categories.search' ||
+                Route::currentRouteName() == 'admin.categories.shown' ||
+                Route::currentRouteName() == 'admin.categories.hidden' 
+                )
                 <li class="nnav-item active pt-2 pb-2 pr-3">
                     <form class="form-inline ml-3" method="POST" action="{{ route('admin.categories.search') }}">
                     @csrf
@@ -57,7 +76,15 @@
                 </li>
             @endif
 
-            @if(strpos(Route::currentRouteName(), 'admin.courses') != '')
+            @if(Route::currentRouteName() == 'admin.courses' ||
+                Route::currentRouteName() == 'admin.courses.edit' ||
+                Route::currentRouteName() == 'admin.courses.move-up' ||
+                Route::currentRouteName() == 'admin.courses.move-down' ||
+                Route::currentRouteName() == 'admin.courses.create' ||
+                Route::currentRouteName() == 'admin.courses.search' ||
+                Route::currentRouteName() == 'admin.courses.shown' ||
+                Route::currentRouteName() == 'admin.courses.hidden' 
+                )
                 <li class="nnav-item active pt-2 pb-2 pr-3">
                     <form class="form-inline ml-3" method="POST" action="{{ route('admin.courses.search', $category->id) }}">
                     @csrf

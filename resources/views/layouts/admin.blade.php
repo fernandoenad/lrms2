@@ -52,10 +52,40 @@
 
 					@if(Auth::user()->role < 3)	
 						<li class="nav-item
-							@if(strpos(Route::currentRouteName(), 'admin.contents') != '' ||
-								strpos(Route::currentRouteName(), 'admin.categories') != '' ||
-								strpos(Route::currentRouteName(), 'admin.courses') != ''
-								) {{ 'menu-open' }} @endif">
+							@if(Route::currentRouteName() == 'admin.contents' ||
+								Route::currentRouteName() == 'admin.contents.search' || 
+								Route::currentRouteName() == 'admin.contents.show' ||
+								Route::currentRouteName() == 'admin.contents.move-up' ||
+								Route::currentRouteName() == 'admin.contents.move-down' ||
+								Route::currentRouteName() == 'admin.contents.edit' ||
+								Route::currentRouteName() == 'admin.contents.create' ||
+								Route::currentRouteName() == 'admin.contents.new' ||
+								Route::currentRouteName() == 'admin.contents.pending' ||
+								Route::currentRouteName() == 'admin.contents.approved' ||
+								Route::currentRouteName() == 'admin.contents.hidden' ||
+								
+
+								Route::currentRouteName() == 'admin.categories' ||
+								Route::currentRouteName() == 'admin.categories.search' || 
+								Route::currentRouteName() == 'admin.categories.edit' ||
+								Route::currentRouteName() == 'admin.categories.create' || 
+								Route::currentRouteName() == 'admin.categories.shown' || 
+ 								Route::currentRouteName() == 'admin.categories.hidden' ||
+								Route::currentRouteName() == 'admin.categories.move-up' ||
+								Route::currentRouteName() == 'admin.categories.move-down' ||
+
+								Route::currentRouteName() == 'admin.courses' ||
+								Route::currentRouteName() == 'admin.courses.search' || 
+								Route::currentRouteName() == 'admin.courses.create' ||
+								Route::currentRouteName() == 'admin.courses.edit' ||
+								Route::currentRouteName() == 'admin.courses.shown' ||
+								Route::currentRouteName() == 'admin.courses.hidden' ||
+								Route::currentRouteName() == 'admin.courses.move-up' ||
+								Route::currentRouteName() == 'admin.courses.move-down'
+								 
+							) 
+								{{ 'menu-open' }} @endif">
+
 							<a href="{{ route('admin.contents') }}" class="nav-link">
 								<i class="nav-icon fas fa-photo-video"></i>
 								<p>Content Mgmt</p>

@@ -62,7 +62,9 @@ Route::middleware(['active'])->group(function () {
         Route::delete('/admin/contents/{content}', [App\Http\Controllers\Admin\ContentController::class, 'delete'])->name('admin.contents.delete');
         Route::get('/admin/contents/{content}/edit', [App\Http\Controllers\Admin\ContentController::class, 'edit'])->name('admin.contents.edit');
         Route::patch('/admin/contents/{content}', [App\Http\Controllers\Admin\ContentController::class, 'update'])->name('admin.contents.update');
-    
+        Route::get('/admin/contents/{content}/move-up', [App\Http\Controllers\Admin\ContentController::class, 'moveup'])->name('admin.contents.move-up');
+        Route::get('/admin/contents/{content}/move-down', [App\Http\Controllers\Admin\ContentController::class, 'movedown'])->name('admin.contents.move-down');
+
         Route::get('/admin/categories/create', [App\Http\Controllers\Admin\CategoryController::class, 'create'])->name('admin.categories.create');
         Route::any('/admin/categories/search', [App\Http\Controllers\Admin\CategoryController::class, 'search'])->name('admin.categories.search');
         Route::get('/admin/categories/shown', [App\Http\Controllers\Admin\CategoryController::class, 'displaycategories'])->name('admin.categories.shown');

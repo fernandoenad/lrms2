@@ -133,7 +133,7 @@
 
                 <div class="form-group row mb-0">
                     <div class="col-md-4 offset-md-2">
-                        <a href="{{ route('admin.contents') }}" class="btn btn-default">
+                        <a href="{{ route('admin.contents.show', $content->id) }}" class="btn btn-default">
                             {{ __('Cancel') }}
                         </a>
                     </div>

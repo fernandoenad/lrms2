@@ -123,7 +123,7 @@ class CategoryController extends Controller
         $hidden_c = $this->getcategories(0)->count();
 
         $category->update([
-            'sort' => $category->sort - 2,
+            'sort' => $category->sort - ($category->sort <= 1 ? 0 : 2),
             ]);
 
         return view('admin.categories.index', compact('categories', 'shown_c', 'hidden_c'));
