@@ -31,7 +31,7 @@ Route::middleware(['active'])->group(function () {
     Route::get('/content', [App\Http\Controllers\My\ContentController::class, 'index'])->name('content');
 
     Route::post('/my/password-change', [App\Http\Controllers\My\MyController::class, 'updatePassword'])->name('my.password-change');
-    Route::get('/my', [App\Http\Controllers\My\MyController::class, 'index'])->name('my'); 
+    Route::get('/my', [App\Http\Controllers\My\MyController::class, 'profile'])->name('my'); 
 
     Route::get('/', [App\Http\Controllers\My\MyController::class, 'index'])->name('home');
 
