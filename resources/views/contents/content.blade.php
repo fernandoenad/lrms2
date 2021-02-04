@@ -212,7 +212,7 @@
                                                         {{ $contentreport->getStatus($contentreport->status) ?? '' }}
                                                     </span>
                                                 </td>
-                                                <td>
+                                                <td class="text-right">
                                                     <div id="accordion">
                                                         <a class="text-primary" data-toggle="collapse" data-parent="#accordion" href="#collapseOne{{ $contentreport->id }}">
                                                             <i class="fas fa-plus-square"></i>
