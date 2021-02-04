@@ -66,22 +66,23 @@
 							<p>LR Contents</p>
 						</a>
 					</li> 
+					@auth
+						@if(Auth::user()->role == 4)
+							<li class="nav-item
+								@if(Route::currentRouteName() == 'inventory' ||
+									Route::currentRouteName() == 'inventory.show' ||
+									Route::currentRouteName() == 'inventory.create' ||
+									Route::currentRouteName() == 'inventory.edit'
+									) 
+										{{ __('menu-open') }} @endif">
 
-					@if(Auth::user()->role == 4)
-						<li class="nav-item
-							@if(Route::currentRouteName() == 'inventory' ||
-								Route::currentRouteName() == 'inventory.show' ||
-								Route::currentRouteName() == 'inventory.create' ||
-								Route::currentRouteName() == 'inventory.edit'
-								) 
-									{{ __('menu-open') }} @endif">
-
-							<a href="{{ route('inventory') }}" class="nav-link">
-								<i class="nav-icon fas fa-list"></i>
-								<p>LR Inventory</p>
-							</a>
-						</li> 
-					@endif
+								<a href="{{ route('inventory') }}" class="nav-link">
+									<i class="nav-icon fas fa-list"></i>
+									<p>LR Inventory</p>
+								</a>
+							</li> 
+						@endif
+					@endauth
 				</ul>
 			</nav>
 		</div>
