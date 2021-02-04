@@ -219,7 +219,7 @@
                                                         </a> 
                                                         <div id="collapseOne{{ $contentreport->id }}" class="panel-collapse collapse in">
                                                             <span class="badge badge-default">
-                                                                {{ $contentreport->messages ?? '' }}
+                                                                {!! $contentreport->messages ?? '' !!}
                                                             </span>
                                                         </div>
                                                     </div>
