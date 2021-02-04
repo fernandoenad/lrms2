@@ -34,7 +34,7 @@
                                 @foreach($contents as $content)
                                     <tr>
                                         <td>
-                                            <a href="{{ route('content.download', $content->id) }}">
+                                            <a href="{{ route('content.show', $content->id) }}">
                                                 <strong>{{ $content->name ?? '' }}</strong>
                                             </a> 
                                         </td>

@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Course;
 use App\Models\Content;
 use App\Models\Download;
+use App\Models\ContentReport;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Response;
@@ -92,6 +93,42 @@ class ContentController extends Controller
         $file_download = Storage::disk('public')->download($content->attachment, $content->name . '.' . $file_ext);
 
         return $file_download;               
+    }
+
+    public function show(Content $content)
+    {
+        $contents = Content::where('course_id', '=', $content->course->id)
+            ->orderBy('sort', 'asc')->get();
+        $contentreports = ContentReport::where('content_id', '=', $content->id)
+            ->orderBy('created_at', 'asc')->get();
+
+        return view('contents.content', compact('content', 'contents', 'contentreports'));
+    }
+
+    public function storereport(Content $content)
+    {
+        $data = request()->validate([
+            'title' => ['required', 'string', 'min:3', 'max:255'],
+            'description' => ['required', 'string', 'min:3'],
+            ]);
+        
+        $content->contentreport()->create(array_merge($data,[
+            'status' => 1,
+            'messages' => '>>>Report created',
+            'user_id' => Auth::user()->id,
+        ]));
+
+        return redirect()->route('content.show', compact('content'))->with('status', 'Report successfully recorded.');
+    }
+
+    public function deletereport(Content $content, ContentReport $contentreport)
+    {
+        if(Auth::user()->id != $contentreport->user_id)
+            abort(401, 'Unauthorized action.');
+        
+        $contentreport->delete();
+
+        return redirect()->route('content.show', compact('content'))->with('status', 'Report successfully recorded.');
     }
 
 }

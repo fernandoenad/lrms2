@@ -55,7 +55,9 @@
 					<li class="nav-item 
 						@if(Route::currentRouteName() == 'content' ||
 							Route::currentRouteName() == 'content.course.show' ||
-							Route::currentRouteName() == 'content.category.show' 
+							Route::currentRouteName() == 'content.category.show' ||
+							Route::currentRouteName() == 'content.show' ||
+							Route::currentRouteName() == 'content.show.report' 
 							) 
 								{{ __('menu-open') }} @endif">
 						
@@ -65,18 +67,39 @@
 						</a>
 					</li> 
 
-					<li class="nav-item">
-						<a href="" class="nav-link" onClick="alert('Feature not yet available!'); return false;">
-							<i class="nav-icon fas fa-list"></i>
-							<p>School Inventory</p>
-						</a>
-					</li> 
+					@if(Auth::user()->role == 4)
+						<li class="nav-item
+							@if(Route::currentRouteName() == 'inventory' ||
+								Route::currentRouteName() == 'inventory.show' ||
+								Route::currentRouteName() == 'inventory.create' ||
+								Route::currentRouteName() == 'inventory.edit'
+								) 
+									{{ __('menu-open') }} @endif">
+
+							<a href="{{ route('inventory') }}" class="nav-link">
+								<i class="nav-icon fas fa-list"></i>
+								<p>LR Inventory</p>
+							</a>
+						</li> 
+					@endif
 				</ul>
 			</nav>
 		</div>
 
 		<div class="sidebar-custom">
-		    @include('layouts._option')   
+			@if(Auth::user()->role < 4)
+				<a href="{{ route('admin') }}" class="btn btn-link hide-on-collapse text-white" title="Admin portal">
+					<i class="fas fa-cogs"></i>
+				</a>
+			@else
+				<a href="{{ route('home') }}" class="btn btn-link hide-on-collapse text-white" title="Main portal">
+					<i class="fas fa-cogs"></i>
+				</a>
+			@endif
+
+			<a href="{{ route('support') }}" class="btn btn-link hide-on-collapse pos-right text-white" title="Support site">
+				<i class="fas fa-question-circle"></i>
+			</a> 
         </div>        
 	</aside>
 

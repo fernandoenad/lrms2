@@ -35,7 +35,7 @@ class ContentController extends Controller
     {
         $contents = Content::where('contents.status', 'like', $status)
             ->where('contents.visibility', 'like', $visibility)
-            ->orderBy('contents.sort', 'asc');
+            ->orderBy('contents.id', 'desc');
         
         return $contents;
     }
@@ -107,7 +107,6 @@ class ContentController extends Controller
             'description' => ['required', 'string', 'min:3', 'max:255'],
             'attachment' => ['required'],
             'status' => ['required'],
-            'visibility' => ['required'],
             ]);
 
         $filePath = 'storage/' . request()->attachment->store('resources', 'public');
@@ -133,6 +132,7 @@ class ContentController extends Controller
             'attachment' => $newFilePath,
             'sort' => $sort,
             'user_id' => Auth::user()->id,
+            'visibility' => ($data['status'] == 3 ? 1 : 0),
         ]));
 
         return redirect()->route('admin.contents.show', compact('content'))->with('status', 'Content was successfully created.');
@@ -146,7 +146,10 @@ class ContentController extends Controller
         $contentlogs = $content->contentlog()->orderBy('id', 'desc')
             ->get();
 
-        return view('admin.contents.show', compact('contents', 'content', 'contentlogs'));
+        $contentreports = $content->contentreport()->orderBy('id', 'desc')
+            ->get();
+
+        return view('admin.contents.show', compact('contents', 'content', 'contentlogs', 'contentreports'));
     }
 
     public function edit(Content $content)
@@ -164,7 +167,6 @@ class ContentController extends Controller
             'name' => ['required', 'string', 'min:3', 'max:255', Rule::unique('contents')->ignore($content->id)],
             'description' => ['required', 'string', 'min:3', 'max:255'],
             'status' => ['required'],
-            'visibility' => ['required'],
             ]);
 
         $content->contentlog()->create([
@@ -185,10 +187,12 @@ class ContentController extends Controller
             $content->update(array_merge($data, [
                 'attachment' => $newFilePath,
                 'user_id' => Auth::user()->id,
+                'visibility' => ($data['status'] == 3 ? 1 : 0),
             ]));
         } else {
             $content->update(array_merge($data, [
                 'user_id' => Auth::user()->id,
+                'visibility' => ($data['status'] == 3 ? 1 : 0),
             ]));
         }        
 
@@ -237,5 +241,29 @@ class ContentController extends Controller
             $course = $content->course_id;
             return redirect()->route('admin.courses.show', compact('course', 'contents'));
         }
+    }
+
+    public function visibility(Content $content)
+    {
+        $contents = Content::where('course_id', '=', $content->course_id)
+            ->orderBy('sort', 'asc')
+            ->get();
+        $contentlogs = $content->contentlog()->orderBy('id', 'desc')
+            ->get();
+        
+        $course = $content->course_id;
+
+        $route_name = request()->route()->getName();
+
+        if($route_name == 'admin.contents.show')
+            $visibility = 1;
+        else if($route_name == 'admin.contents.hide')
+            $visibility = 0;
+            
+        $content->update([
+            'visibility' => $visibility,
+            ]);
+        return redirect()->route('admin.courses.show', compact('course', 'contents'));
+
     }
 }

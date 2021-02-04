@@ -63,6 +63,11 @@ class User extends Authenticatable
         return $this->hasMany(Download::class);
     }
 
+    public function contentreport()
+    {
+        return $this->hasMany(ContentReport::class);
+    }
+
     public function contentlog()
     {
         return $this->hasMany(ContentLog::class);
@@ -71,6 +76,11 @@ class User extends Authenticatable
     public function role()
     {
         return $this->hasOne(Role::class);
+    }
+
+    public function inventory()
+    {
+        return $this->hasMany(Inventory::class);
     }
 
     public function getRole($role)

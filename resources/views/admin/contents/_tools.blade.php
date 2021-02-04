@@ -13,7 +13,9 @@
                 Route::currentRouteName() == 'admin.contents.new' ||
                 Route::currentRouteName() == 'admin.contents.pending' ||
                 Route::currentRouteName() == 'admin.contents.approved' ||
-                Route::currentRouteName() == 'admin.contents.hidden' 
+                Route::currentRouteName() == 'admin.contents.hidden' ||
+                Route::currentRouteName() == 'admin.courses.show'  
+                
                 )
                 <li class="nnav-item active pt-2 pb-2 pr-3">
                     <form class="form-inline ml-3" method="POST" action="{{ route('admin.contents.search') }}">
@@ -110,7 +112,7 @@
 
             @if(Route::currentRouteName() == 'admin.courses.allsearch' ||
                 Route::currentRouteName() == 'admin.courses.allshown' ||
-                Route::currentRouteName() == 'admin.courses.allhidden'
+                Route::currentRouteName() == 'admin.courses.allhidden'               
                 )
                 <li class="nnav-item active pt-2 pb-2 pr-3">
                     <form class="form-inline ml-3" method="POST" action="{{ route('admin.courses.allsearch') }}">
@@ -144,7 +146,6 @@
                     Courses
                 </a>
             </li>
-
             @if(Route::currentRouteName() != 'admin.contents')
                 <li class="nav-item">
                     <a href="{{ route('admin.contents') }}" class="nav-link">

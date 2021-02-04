@@ -113,7 +113,7 @@
                                 @foreach($contents as $content)
                                 <tr>
                                         <td>
-                                            <a href="{{ route('admin.contents.show', $content->id) }}" title="{{ $content->description ?? '' }}">
+                                            <a href="{{ route('admin.contents.display', $content->id) }}" >
                                                 <strong>{{ $content->name ?? '' }}</strong>
                                             </a>
                                             <br>

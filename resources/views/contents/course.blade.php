@@ -26,15 +26,26 @@
                     <span class="badge badge-success  float-right">
                         <small>Updated on {{ date('M d, Y', strtotime($content->updated_at)) ?? '' }}</small>
                     </span>
-                    <h5>{{ $content->name ?? '' }}</h5>
+                    <h5>
+                        <a href="{{ route('content.show', $content->id) }}">
+                            <strong>{{ $content->name ?? '' }}</strong>
+                        </a>
+                    </h5>
                     <span class="float-right">
-                        <a href="{{ asset('storage/' . $content->attachment) }}" download>
+                        <a href="{{ route('content.show.report', $content->id) }}">
+                            Report</a>
+                        ({{ $content->join('content_reports', 'contents.id', '=', 'content_reports.content_id')
+                            ->where('contents.id', '=', $content->id)
+                            ->count() ?? '' }})  
+                        &nbsp;
+                        <a href="{{ route('content.download', $content->id) }}">
                             Download</a>
-                        &nbsp;({{ $content->join('downloads', 'contents.id', '=', 'downloads.content_id')
+                        ({{ $content->join('downloads', 'contents.id', '=', 'downloads.content_id')
                                 ->where('contents.id', '=', $content->id)
                                 ->count() ?? '' }})  
+                        
                     </span>
-                    <p>
+                    <p>                    
                         {{ $content->description ?? '' }}
                         <br>
                         <em><small>Uploaded by <strong>{{ $content->user->name ?? '' }}</strong></small></em>

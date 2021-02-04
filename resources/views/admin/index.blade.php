@@ -92,7 +92,7 @@
                                 @foreach($contents_f as $content)
                                     <tr>
                                         <td title="{{ $content->description ?? '' }}">
-                                            <a href="{{ route('admin.contents.show', $content->id) }}">
+                                            <a href="{{ route('admin.contents.display', $content->id) }}">
                                                 <strong>{{ $content->name ?? '' }}</strong>
                                             </a>
                                             <br>
@@ -105,9 +105,13 @@
                                             <span class="badge badge-info">{{ date('M d, Y h:ia', strtotime($content->created_at)) ?? '' }}</span>
                                         </td>
                                         <td>
-                                            {{ $content->getStatus($content->status) ?? '' }}
+                                            <span class="badge badge-{{ $content->getStatusColor($content->status) ?? ''}}">
+                                                {{ $content->getStatus($content->status) ?? '' }}
+                                            </span>
                                             <br>
-                                            {{ $content->getVisibility($content->visibility) ?? '' }}
+                                            <span class="badge badge-{{ $content->getVisibilityColor($content->visibility)}}">
+                                                {{ $content->getVisibility($content->visibility) ?? '' }}
+                                            </span>
                                         </td>
                                         <td></td>
                                     </tr>

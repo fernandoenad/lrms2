@@ -42,19 +42,44 @@
 					</li> 
 
 					@if(Auth::user()->role == 3)	
-                    <li class="nav-item">
-						<a href="" class="nav-link" onClick="alert('Feature not yet available!'); return false;">
-							<i class="nav-icon fas fa-swatchbook"></i>
-							<p>My Content</p>
-						</a>
-					</li>
+						<li class="nav-item 
+							@if(Route::currentRouteName() == 'admin.mycontents' || 
+								Route::currentRouteName() == 'admin.mycontents.course' ||
+								Route::currentRouteName() == 'admin.mycontents.search' ||
+								Route::currentRouteName() == 'admin.mycontents.shown' ||
+								Route::currentRouteName() == 'admin.mycontents.hidden' ||
+								Route::currentRouteName() == 'admin.mycontents.submissions' ||
+								Route::currentRouteName() == 'admin.mycontents.course.display' ||
+								Route::currentRouteName() == 'admin.mycontents.create'
+								
+							) 
+								{{ 'menu-open' }} @endif">
+							
+							<a href="{{ route('admin.mycontents') }}" class="nav-link">
+								<i class="nav-icon fas fa-photo-video"></i>
+								<p>Content Mgmt</p>
+							</a>
+						</li>
 					@endif
+					
+					<li class="nav-item 
+						@if(Route::currentRouteName() == 'admin.reports' ||
+							Route::currentRouteName() == 'admin.reports.show'						
+						)
+							{{ 'menu-open' }} @endif">
+
+						<a href="{{ route('admin.reports') }}" class="nav-link">
+							<i class="nav-icon fas fa-inbox"></i>
+							<p>Report Mgmt</p>
+						</a>
+					</li> 
 
 					@if(Auth::user()->role < 3)	
 						<li class="nav-item
 							@if(Route::currentRouteName() == 'admin.contents' ||
 								Route::currentRouteName() == 'admin.contents.search' || 
 								Route::currentRouteName() == 'admin.contents.show' ||
+								Route::currentRouteName() == 'admin.contents.display' ||
 								Route::currentRouteName() == 'admin.contents.move-up' ||
 								Route::currentRouteName() == 'admin.contents.move-down' ||
 								Route::currentRouteName() == 'admin.contents.edit' ||
@@ -129,7 +154,13 @@
 		</div>
 
         <div class="sidebar-custom">
-		    @include('layouts._option')   
+			<a href="{{ route('home') }}" class="btn btn-link hide-on-collapse text-white" title="Main portal">
+				<i class="fas fa-home"></i>
+			</a>
+
+			<a href="{{ route('support') }}" class="btn btn-link hide-on-collapse pos-right text-white" title="Support site">
+				<i class="fas fa-question-circle"></i>
+			</a>
         </div>      
 	</aside>
 

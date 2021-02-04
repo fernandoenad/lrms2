@@ -297,7 +297,7 @@
             <div class="col-md-8">       
                 <div class="card card-outline card-primary">
                     <div class="card-header border-transparent">
-                        Course List
+                        Course List for <strong>{{ $category->name ?? '' }}</strong>
                     </div>
 
                     <div class="card-body p-0">

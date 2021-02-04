@@ -49,6 +49,11 @@ class Content extends Model
         return $this->hasMany(Download::class);
     }
 
+    public function contentreport()
+    {
+        return $this->hasMany(ContentReport::class);
+    }
+
     public function contentlog()
     {
         return $this->hasMany(ContentLog::class);

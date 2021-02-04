@@ -8,7 +8,7 @@
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.contents') }}">Contents</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.categories') }}">Categories</a></li>
             <li class="breadcrumb-item active">New Content</li>
         </ol>
     </div>
@@ -99,24 +99,6 @@
                         </select>
 
                         @error('status')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="visibility" class="col-md-2 col-form-label text-md-right">{{ __('Visibility') }}</label>
-
-                    <div class="col-md-10">
-                        <select id="visibility" type="text" class="form-control @error('visibility') is-invalid @enderror" name="visibility" value="{{ old('visibility') }}" autocomplete="visibility" autofocus>
-                            <option value="">Select</option>
-                            <option value="1" @if(old('visibility') == 1) {{ 'selected' }} @endif>Show</option>
-                            <option value="0" @if(old('visibility') == 0) {{ 'selected' }} @endif>Hide</option>                            
-                        </select>
-                        
-                        @error('visibility')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>

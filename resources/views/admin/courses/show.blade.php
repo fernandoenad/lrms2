@@ -8,7 +8,8 @@
     <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.courses.allshown') }}">Courses</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.categories') }}">Categories</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.courses', $course->category->id) }}">Courses</a></li>
             <li class="breadcrumb-item active">Course </li>
         </ol>
     </div>
@@ -67,7 +68,11 @@
             <div class="col-md-12">       
                 <div class="card card-outline card-primary">
                     <div class="card-header border-transparent">
-                        Content List
+                        Content List for <strong>{{ $course->name ?? '' }}</strong>
+                        <span class="float-right">
+                            <a href="{{ route('admin.courses', $course->category->id) }}">
+                                <i class="fas fa-arrow-circle-left"></i> Back</a>
+                        </span>
                     </div>
 
                     <div class="card-body p-0">
@@ -87,7 +92,7 @@
                                         @foreach($contents as $content)
                                             <tr>
                                                 <td title="{{ $content->description ?? '' }}">
-                                                    <a href="{{ route('admin.contents.show', $content->id) }}">
+                                                    <a href="{{ route('admin.contents.display', $content->id) }}">
                                                         <strong>{{ $content->name ?? '' }}</strong>
                                                     </a>
                                                     <br>
@@ -107,7 +112,20 @@
                                                 </td>
                                                 <td>{{ $content->user->name ?? '' }}</td>
                                                 <td class="text-right">{{ $content->download->count() ?? '' }}</td>
-                                                <td>
+                                                <td class="text-right">
+                                                    @if($content->visibility == 1 && $content->status == 3)
+                                                        <a href="{{ route('admin.contents.hide', $content->id) }}" class="btn btn-primary btn-sm">
+                                                            <i class="fas fa-eye-slash"></i>
+                                                        </a>  
+                                                    @elseif($content->visibility == 0 && $content->status == 3)
+                                                        <a href="{{ route('admin.contents.show', $content->id) }}" class="btn btn-primary btn-sm">
+                                                            <i class="fas fa-eye"></i>
+                                                        </a>   
+                                                    @elseif($content->visibility == 0 && $content->status < 3)                                                     
+                                                    @endif 
+                                                    <a href="{{ route('admin.contents.edit', $content->id) }}" class="btn btn-warning btn-sm">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
                                                     <a href="{{ route('admin.contents.move-up', $content->id) }}" class="btn btn-info btn-sm">
                                                         <i class="fas fa-arrow-up"></i>
                                                     </a>

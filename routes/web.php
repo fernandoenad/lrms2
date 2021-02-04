@@ -26,9 +26,22 @@ Route::get('/support', [App\Http\Controllers\SupportController::class, 'index'])
 Route::middleware(['active'])->group(function () { 
     Route::get('/content/download/{id}/', [App\Http\Controllers\My\ContentController::class, 'download'])->name('content.download');
     
+    Route::get('/content/show/{content}', [App\Http\Controllers\My\ContentController::class, 'show'])->name('content.show');
+    Route::get('/content/show/{content}/report', [App\Http\Controllers\My\ContentController::class, 'show'])->name('content.show.report');
+    Route::get('/content/show/{content}/report-delete/{contentreport}', [App\Http\Controllers\My\ContentController::class, 'deletereport'])->name('content.show.report-delete');
+    Route::post('/content/show/{content}/report-store', [App\Http\Controllers\My\ContentController::class, 'storereport'])->name('content.show.report-store');
+
     Route::get('/content/{category}/{course}', [App\Http\Controllers\My\ContentController::class, 'showCourse'])->name('content.course.show');
     Route::get('/content/{category}', [App\Http\Controllers\My\ContentController::class, 'showCategory'])->name('content.category.show');
     Route::get('/content', [App\Http\Controllers\My\ContentController::class, 'index'])->name('content');
+
+    Route::any('/inventory/search', [App\Http\Controllers\My\InventoryController::class, 'search'])->name('inventory.search');
+    Route::get('/inventory/create', [App\Http\Controllers\My\InventoryController::class, 'create'])->name('inventory.create');
+    Route::post('/inventory/store', [App\Http\Controllers\My\InventoryController::class, 'store'])->name('inventory.store');
+    Route::get('/inventory/{inventory}/edit', [App\Http\Controllers\My\InventoryController::class, 'edit'])->name('inventory.edit');
+    Route::patch('/inventory/{inventory}', [App\Http\Controllers\My\InventoryController::class, 'update'])->name('inventory.update');
+    Route::delete('/inventory/{inventory}', [App\Http\Controllers\My\InventoryController::class, 'delete'])->name('inventory.delete');
+    Route::get('/inventory', [App\Http\Controllers\My\InventoryController::class, 'index'])->name('inventory');
 
     Route::post('/my/password-change', [App\Http\Controllers\My\MyController::class, 'updatePassword'])->name('my.password-change');
     Route::get('/my', [App\Http\Controllers\My\MyController::class, 'profile'])->name('my'); 
@@ -58,7 +71,9 @@ Route::middleware(['active'])->group(function () {
         Route::get('/admin/contents/hidden', [App\Http\Controllers\Admin\ContentController::class, 'displaycontents'])->name('admin.contents.hidden');
         Route::get('/admin/contents', [App\Http\Controllers\Admin\ContentController::class, 'index'])->name('admin.contents');
         Route::post('/admin/contents', [App\Http\Controllers\Admin\ContentController::class, 'store'])->name('admin.contents.store');
-        Route::get('/admin/contents/{content}', [App\Http\Controllers\Admin\ContentController::class, 'show'])->name('admin.contents.show');
+        Route::get('/admin/contents/{content}', [App\Http\Controllers\Admin\ContentController::class, 'show'])->name('admin.contents.display');
+        Route::get('/admin/contents/{content}/hide', [App\Http\Controllers\Admin\ContentController::class, 'visibility'])->name('admin.contents.hide');
+        Route::get('/admin/contents/{content}/show', [App\Http\Controllers\Admin\ContentController::class, 'visibility'])->name('admin.contents.show');
         Route::delete('/admin/contents/{content}', [App\Http\Controllers\Admin\ContentController::class, 'delete'])->name('admin.contents.delete');
         Route::get('/admin/contents/{content}/edit', [App\Http\Controllers\Admin\ContentController::class, 'edit'])->name('admin.contents.edit');
         Route::patch('/admin/contents/{content}', [App\Http\Controllers\Admin\ContentController::class, 'update'])->name('admin.contents.update');
@@ -96,6 +111,27 @@ Route::middleware(['active'])->group(function () {
 
     Route::middleware(['personnel'])->group(function () {
         Route::get('/admin', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin');
+
+        Route::any('/admin/mycontents/search', [App\Http\Controllers\Admin\MyContentsController::class, 'search'])->name('admin.mycontents.search');
+        Route::get('/admin/mycontents/create', [App\Http\Controllers\Admin\MyContentsController::class, 'create'])->name('admin.mycontents.create');
+        Route::post('/admin/mycontents', [App\Http\Controllers\Admin\MyContentsController::class, 'store'])->name('admin.mycontents.store');
+        Route::get('/admin/mycontents/course/{course}', [App\Http\Controllers\Admin\MyContentsController::class, 'showcourse'])->name('admin.mycontents.course');
+        Route::get('/admin/mycontents/course/{course}/{content}/edit', [App\Http\Controllers\Admin\MyContentsController::class, 'edit'])->name('admin.mycontents.edit');       
+        Route::patch('/admin/mycontents/course/{course}/{content}', [App\Http\Controllers\Admin\MyContentsController::class, 'update'])->name('admin.mycontents.update');       
+        Route::get('/admin/mycontents/course/{course}/{content}/hide', [App\Http\Controllers\Admin\MyContentsController::class, 'visibility'])->name('admin.mycontents.course.hide');
+        Route::get('/admin/mycontents/course/{course}/{content}/show', [App\Http\Controllers\Admin\MyContentsController::class, 'visibility'])->name('admin.mycontents.course.show');
+        Route::get('/admin/mycontents/course/{course}/{content}/move-up', [App\Http\Controllers\Admin\MyContentsController::class, 'sort'])->name('admin.mycontents.course.move-up');
+        Route::get('/admin/mycontents/course/{course}/{content}/move-down', [App\Http\Controllers\Admin\MyContentsController::class, 'sort'])->name('admin.mycontents.course.move-down');
+        Route::get('/admin/mycontents/course/{course}/{content}/display', [App\Http\Controllers\Admin\MyContentsController::class, 'show'])->name('admin.mycontents.course.display');
+        Route::get('/admin/mycontents', [App\Http\Controllers\Admin\MyContentsController::class, 'index'])->name('admin.mycontents');
+        Route::get('/admin/mycontents/shown', [App\Http\Controllers\Admin\MyContentsController::class, 'display'])->name('admin.mycontents.shown');
+        Route::get('/admin/mycontents/hidden', [App\Http\Controllers\Admin\MyContentsController::class, 'display'])->name('admin.mycontents.hidden');
+        Route::get('/admin/mycontents/submissions', [App\Http\Controllers\Admin\MyContentsController::class, 'display'])->name('admin.mycontents.submissions');
+
+        Route::get('/admin/reports', [App\Http\Controllers\Admin\ReportController::class, 'index'])->name('admin.reports');
+        Route::get('/admin/reports/{contentreport}', [App\Http\Controllers\Admin\ReportController::class, 'show'])->name('admin.reports.show');
+        Route::patch('/admin/reports/{contentreport}', [App\Http\Controllers\Admin\ReportController::class, 'update'])->name('admin.reports.update');
+
     });
 });
 
