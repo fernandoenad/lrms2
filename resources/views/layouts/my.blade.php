@@ -88,16 +88,17 @@
 		</div>
 
 		<div class="sidebar-custom">
-			@if(Auth::user()->role < 4)
-				<a href="{{ route('admin') }}" class="btn btn-link hide-on-collapse text-white" title="Admin portal">
-					<i class="fas fa-cogs"></i>
-				</a>
-			@else
-				<a href="{{ route('home') }}" class="btn btn-link hide-on-collapse text-white" title="Main portal">
-					<i class="fas fa-cogs"></i>
-				</a>
-			@endif
-
+			@auth
+				@if(Auth::user()->role < 4)
+					<a href="{{ route('admin') }}" class="btn btn-link hide-on-collapse text-white" title="Admin portal">
+						<i class="fas fa-cogs"></i>
+					</a>
+				@else
+					<a href="{{ route('home') }}" class="btn btn-link hide-on-collapse text-white" title="Main portal">
+						<i class="fas fa-cogs"></i>
+					</a>
+				@endif
+			@endauth
 			<a href="{{ route('support') }}" class="btn btn-link hide-on-collapse pos-right text-white" title="Support site">
 				<i class="fas fa-question-circle"></i>
 			</a> 
