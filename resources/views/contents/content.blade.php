@@ -218,7 +218,7 @@
                                                             <i class="fas fa-plus-square"></i>
                                                         </a> 
                                                         <div id="collapseOne{{ $contentreport->id }}" class="panel-collapse collapse in">
-                                                            <span class="badge badge-default">
+                                                            <span class="badge badge-default text-left">
                                                                 {!! $contentreport->messages ?? '' !!}
                                                             </span>
                                                         </div>
