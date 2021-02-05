@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'manager' => \App\Http\Middleware\CheckManagerRoles::class,
         'personnel' => \App\Http\Middleware\CheckPersonnelRoles::class,
         'active' => \App\Http\Middleware\CheckUserStatus::class,
+        'log' => \App\Http\Middleware\LogRecorder::class,
     ];
 }

@@ -83,6 +83,11 @@ class User extends Authenticatable
         return $this->hasMany(Inventory::class);
     }
 
+    public function userlog()
+    {
+        return $this->hasMany(UserLog::class);
+    }
+
     public function getRole($role)
     {
         switch($role){

@@ -23,7 +23,7 @@ Auth::routes();
 
 Route::get('/support', [App\Http\Controllers\SupportController::class, 'index'])->name('support');
 
-Route::middleware(['active'])->group(function () { 
+Route::middleware(['active', 'log'])->group(function () { 
     Route::get('/content/download/{id}/', [App\Http\Controllers\My\ContentController::class, 'download'])->name('content.download');
     
     Route::get('/content/show/{content}', [App\Http\Controllers\My\ContentController::class, 'show'])->name('content.show');
