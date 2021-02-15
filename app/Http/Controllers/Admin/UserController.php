@@ -23,8 +23,9 @@ class UserController extends Controller
         $managers_c = $this->getRoleCount(2)->count();
         $staff_c = $this->getRoleCount(3)->count();
         $users_c = $this->getRoleCount(4)->count();
+        $coordinators_c = $this->getRoleCount(5)->count();
 
-        return view('admin.users.index', compact('users_f', 'managers_c', 'staff_c', 'users_c'));
+        return view('admin.users.index', compact('users_f', 'managers_c', 'staff_c', 'users_c', 'coordinators_c'));
     }
 
     public function getUsers()
@@ -52,8 +53,9 @@ class UserController extends Controller
         $managers_c = $this->getRoleCount(2)->count();
         $staff_c = $this->getRoleCount(3)->count();
         $users_c = $this->getRoleCount(4)->count();
+        $coordinators_c = $this->getRoleCount(5)->count();
 
-        return view('admin.users.index', compact('users_f', 'managers_c', 'staff_c', 'users_c'));       
+        return view('admin.users.index', compact('users_f', 'managers_c', 'staff_c', 'users_c', 'coordinators_c', ));       
     }
 
     public function search()
@@ -65,12 +67,18 @@ class UserController extends Controller
                         ->orWhere('username', 'like', '%' . $str . '%')
                         ->orWhere('email', 'like', '%' . $str . '%');
                 })
+            ->orWhere('district', '=', $str)
+            ->orWhere('service', '=', $str)
+            ->orWhere('role', '=', $str)
             ->paginate(15);
         $managers_c = $this->getRoleCount(2)->count();
         $staff_c = $this->getRoleCount(3)->count();
         $users_c = $this->getRoleCount(4)->count();
+        $coordinators_c = $this->getRoleCount(5)->count();
 
-        return view('admin.users.index', compact('users_f', 'managers_c', 'staff_c', 'users_c'));
+        $users_f->appends(['str' => $str]);
+
+        return view('admin.users.index', compact('users_f', 'managers_c', 'staff_c', 'users_c', 'coordinators_c', ));
     }
 
     public function edit(User $user)
@@ -80,6 +88,7 @@ class UserController extends Controller
         $managers_c = $this->getRoleCount(2)->count();
         $staff_c = $this->getRoleCount(3)->count();
         $users_c = $this->getRoleCount(4)->count();
+        $coordinators_c = $this->getRoleCount(5)->count();
 
         $services = $this->getUsers()->orderBy('service', 'asc')
             ->groupBy('service')   
@@ -91,7 +100,7 @@ class UserController extends Controller
             ->select('district')       
             ->get();
 
-        return view('admin.users.index', compact('users_f', 'managers_c', 'staff_c', 'users_c', 'user', 'services', 'districts'));
+        return view('admin.users.index', compact('users_f', 'managers_c', 'staff_c', 'users_c', 'coordinators_c', 'user', 'services', 'districts'));
     }
 
     public function update(User $user)
@@ -117,6 +126,7 @@ class UserController extends Controller
         $managers_c = $this->getRoleCount(2)->count();
         $staff_c = $this->getRoleCount(3)->count();
         $users_c = $this->getRoleCount(4)->count();
+        $coordinators_c = $this->getRoleCount(5)->count();
 
         $services = User::orderBy('service', 'asc')
             ->groupBy('service')   
@@ -128,7 +138,7 @@ class UserController extends Controller
             ->select('district')
             ->get();
 
-        return view('admin.users.index', compact('users_f', 'managers_c', 'staff_c', 'users_c', 'services', 'districts'));
+        return view('admin.users.index', compact('users_f', 'managers_c', 'staff_c', 'users_c', 'coordinators_c', 'services', 'districts'));
     }
 
     public function store()
@@ -158,8 +168,9 @@ class UserController extends Controller
         $managers_c = $this->getRoleCount(2)->count();
         $staff_c = $this->getRoleCount(3)->count();
         $users_c = $this->getRoleCount(4)->count();
+        $coordinators_c = $this->getRoleCount(5)->count();
 
-        return view('admin.users.index', compact('users_f', 'managers_c', 'staff_c', 'users_c', 'user'));
+        return view('admin.users.index', compact('users_f', 'managers_c', 'staff_c', 'users_c', 'coordinators_c', 'user'));
     }
 
     public function disabled(User $user)
@@ -177,8 +188,9 @@ class UserController extends Controller
         $managers_c = $this->getRoleCount(2)->count();
         $staff_c = $this->getRoleCount(3)->count();
         $users_c = $this->getRoleCount(4)->count();
+        $coordinators_c = $this->getRoleCount(5)->count();
 
-        return view('admin.users.index', compact('users_f', 'managers_c', 'staff_c', 'users_c', 'user'));
+        return view('admin.users.index', compact('users_f', 'managers_c', 'staff_c', 'users_c', 'coordinators_c', 'user'));
     }
 
     public function resetted(User $user)

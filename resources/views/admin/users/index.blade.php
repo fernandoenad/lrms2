@@ -16,7 +16,7 @@
 <div class="row">
     <div class="col-md-9">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="info-box">
                     <span class="info-box-icon bg-info elevation-1"><i class="fas fa-users-cog"></i></span>
 
@@ -29,7 +29,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="info-box">
                     <span class="info-box-icon bg-info elevation-1"><i class="fas fa-users"></i></span>
 
@@ -42,7 +42,20 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
+                <div class="info-box">
+                    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-users"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Coordinators</span>
+                        <span class="info-box-number">
+                            {{ number_format($coordinators_c, 0) }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
                 <div class="info-box">
                     <span class="info-box-icon bg-info elevation-1"><i class="fas fa-users"></i></span>
 
@@ -173,6 +186,7 @@
                                         <option value="2" @if(old('role') == 2 || $user->role == 2) {{ 'selected '}} @endif>Manager</option>
                                         <option value="3" @if(old('role') == 3 || $user->role == 3) {{ 'selected '}} @endif>Personnel</option>
                                         <option value="4" @if(old('role') == 4 || $user->role == 4) {{ 'selected '}} @endif>User</option>
+                                        <option value="5" @if(old('role') == 5 || $user->role == 5) {{ 'selected' }} @endif>Coordinator</option>
                                     </select>
                                     @error('role')
                                         <span class="invalid-feedback" role="alert">
@@ -302,6 +316,7 @@
                                         <option value="2" @if(old('role') == 2) {{ 'selected' }} @endif>Manager</option>
                                         <option value="3" @if(old('role') == 3) {{ 'selected' }} @endif>Personnel</option>
                                         <option value="4" @if(old('role') == 4) {{ 'selected' }} @endif>User</option>
+                                        <option value="5" @if(old('role') == 5) {{ 'selected' }} @endif>Coordinator</option>
                                     </select>
                                     @error('role')
                                         <span class="invalid-feedback" role="alert">

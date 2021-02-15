@@ -103,6 +103,9 @@ class User extends Authenticatable
             case 4:
                 $role_name = 'User';
                 break;
+            case 5:
+                $role_name = 'Coordinator';
+                break;    
         }
 
         return $role_name;
