@@ -112,9 +112,10 @@ class ContentController extends Controller
         $filePath = 'storage/' . request()->attachment->store('resources', 'public');
         $file_ext = File::extension($filePath);
         $unique_suffix = strtotime(now());
-        $newFilePath = 'storage/resources/' . $data['name'] . '-' . $unique_suffix . '.' . $file_ext;
+        $newFilePath = 'storage/resources/' . str_replace(' ', '', $data['name']) . '-' . $unique_suffix . '.' . $file_ext;
+        $newFilePath = str_replace(' ', '', $newFilePath);
         rename($filePath, $newFilePath);
-        $newFilePath = 'resources/' . $data['name'] . '-' . $unique_suffix . '.' . $file_ext;
+        $newFilePath = 'resources/' . str_replace(' ', '', $data['name']) . '-' . $unique_suffix . '.' . $file_ext;
 
         $contentLast = Content::where('course_id', '=', $data['course_id'])
             ->orderBy('id', 'desc')
@@ -180,9 +181,9 @@ class ContentController extends Controller
             $filePath = 'storage/' . request()->attachment->store('resources', 'public');
             $file_ext = File::extension($filePath);
             $unique_suffix = strtotime(now());
-            $newFilePath = 'storage/resources/' . $content->name . '-' . $unique_suffix . '.' . $file_ext;
+            $newFilePath = 'storage/resources/' . str_replace(' ', '', $content->name) . '-' . $unique_suffix . '.' . $file_ext;
             rename($filePath, $newFilePath);
-            $newFilePath = 'resources/' . $content->name . '-' . $unique_suffix . '.' . $file_ext;
+            $newFilePath = 'resources/' . str_replace(' ', '', $content->name) . '-' . $unique_suffix . '.' . $file_ext;
 
             $content->update(array_merge($data, [
                 'attachment' => $newFilePath,
