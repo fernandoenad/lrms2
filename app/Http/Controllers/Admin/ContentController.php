@@ -109,7 +109,7 @@ class ContentController extends Controller
             'status' => ['required'],
             ]);
 
-        $filePath = 'storage/' . request()->attachment->store('resources', 'public');
+        $filePath = 'storage/' . request()->file('attachment')->store('resources', 'public');
         $file_ext = File::extension($filePath);
         $unique_suffix = strtotime(now());
         $newFilePath = 'storage/resources/' . str_replace(' ', '', $data['name']) . '-' . $unique_suffix . '.' . $file_ext;
@@ -178,7 +178,7 @@ class ContentController extends Controller
         ]);
 
         if(request()->attachment){
-            $filePath = 'storage/' . request()->attachment->store('resources', 'public');
+            $filePath = 'storage/' . request()->file('attachment')->store('resources', 'public');
             $file_ext = File::extension($filePath);
             $unique_suffix = strtotime(now());
             $newFilePath = 'storage/resources/' . str_replace(' ', '', $content->name) . '-' . $unique_suffix . '.' . $file_ext;
