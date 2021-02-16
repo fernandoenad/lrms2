@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Routing\Route;
-use File;
+use Illuminate\Http\File;
 
 class ContentController extends Controller
 {
@@ -109,6 +109,12 @@ class ContentController extends Controller
             'status' => ['required'],
             ]);
 
+        $ext = request()->file('attachment')->extension();
+        $new_name = str_replace([' ', '/'], '', request()->name);
+        $path = Storage::putFileAs('public/resources', request()->file('attachment'), $new_name . '-' . strtotime(now()) . '.' . $ext);
+        
+        //dd($path);
+        /*    
         $filePath = 'storage/' . request()->file('attachment')->store('resources', 'public');
         $file_ext = File::extension($filePath);
         $unique_suffix = strtotime(now());
@@ -116,6 +122,7 @@ class ContentController extends Controller
         $newFilePath = str_replace(' ', '', $newFilePath);
         rename($filePath, $newFilePath);
         $newFilePath = 'resources/' . str_replace(' ', '', $data['name']) . '-' . $unique_suffix . '.' . $file_ext;
+        */
 
         $contentLast = Content::where('course_id', '=', $data['course_id'])
             ->orderBy('id', 'desc')
@@ -130,7 +137,7 @@ class ContentController extends Controller
         $content = Content::create(array_merge($data, [
             'datefrom' => now(),
             'dateto' => now(),
-            'attachment' => $newFilePath,
+            'attachment' => str_replace('public/','', $path),
             'sort' => $sort,
             'user_id' => Auth::user()->id,
             'visibility' => ($data['status'] == 3 ? 1 : 0),
@@ -178,15 +185,21 @@ class ContentController extends Controller
         ]);
 
         if(request()->attachment){
+            $ext = request()->file('attachment')->extension();
+            $new_name = str_replace([' ', '/'], '', $content->name);
+            $path = Storage::putFileAs('public/resources', request()->file('attachment'), $new_name . '-' . strtotime(now()) . '.' . $ext);
+            //dd($path);
+
+            /*
             $filePath = 'storage/' . request()->file('attachment')->store('resources', 'public');
             $file_ext = File::extension($filePath);
             $unique_suffix = strtotime(now());
             $newFilePath = 'storage/resources/' . str_replace(' ', '', $content->name) . '-' . $unique_suffix . '.' . $file_ext;
             rename($filePath, $newFilePath);
             $newFilePath = 'resources/' . str_replace(' ', '', $content->name) . '-' . $unique_suffix . '.' . $file_ext;
-
+            */
             $content->update(array_merge($data, [
-                'attachment' => $newFilePath,
+                'attachment' => str_replace('public/','', $path),
                 'user_id' => Auth::user()->id,
                 'visibility' => ($data['status'] == 3 ? 1 : 0),
             ]));
