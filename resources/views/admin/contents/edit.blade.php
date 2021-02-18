@@ -121,7 +121,7 @@
                         </a>
                     </div>
                     <div class="col-md-6">
-                        <button type="submit" class="btn btn-primary float-right">
+                        <button type="submit" id="image-submit" class="btn btn-primary float-right">
                             {{ __('Update content') }}
                         </button>
                     </div>
@@ -137,6 +137,17 @@
 
     <div class="col-md-3">
         @include('admin.contents._tools')
+    </div>
+</div>
+
+<div class="modal fade" id="progress-modal">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content bg-default">
+            <div class="modal-body">
+                <strong class="text-center">Uploading media...</strong>
+            </div>
+            
+        </div>
     </div>
 </div>
 @endsection
