@@ -144,7 +144,7 @@
     <div class="modal-dialog modal-md">
         <div class="modal-content bg-default">
             <div class="modal-body">
-                <strong class="text-center">Uploading media...</strong>
+                <strong class="text-center">Uploading media, please wait...</strong>
             </div>
             
         </div>
