@@ -18,7 +18,7 @@
         <div class="card card-widget widget-user-2">
             <div class="widget-user-header bg-primary">
                 <div class="widget-user-image">
-                  <img class="img-circle elevation-2" src="{{ asset('storage/'.$user->image ?? 'storage/avatars/no-avatar.jpg') }}" alt="User Avatar">
+                  <img class="img-circle elevation-2" src="{{ asset('./img/no-avatar.jpg') }}" alt="User Avatar">
                 </div>
                 <h3 class="widget-user-username">{{ $user->name ?? '' }}</h3>
                 <h5 class="widget-user-desc">{{ Auth::user()->getRole(Auth::user()->role) ?? '' }}</h5>

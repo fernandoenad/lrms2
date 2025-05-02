@@ -14,7 +14,7 @@
 	<nav class="main-header navbar navbar-expand navbar-white navbar-light fixed-top ">
 		@guest
 			<a class="navbar-brand" href="#">
-                <img src="{{ asset('storage/images/logo.png') }}" alt="Logo" style="width:30px;">
+                <img src="{{ asset('./img/logo.png') }}" alt="Logo" style="width:30px;">
                 {{ config('app.name', 'Laravel') }}
             </a>
 		@else
@@ -107,7 +107,7 @@
 
 	<div class="content-wrapper">
 		<div class="content-header">
-			<div class="container">
+			<div class="container-fluid">
 				@yield('content')
 			</div>
 		</div>

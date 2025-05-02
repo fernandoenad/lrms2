@@ -55,13 +55,13 @@
 
     <li class="nav-item dropdown user-menu">
         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-            <img src="{{ asset('storage/avatars/no-avatar.jpg') }}" class="user-image img-circle elevation-2" alt="User Image">
+            <img src="{{ asset('./img/no-avatar.jpg') }}" class="user-image img-circle elevation-2" alt="User Image">
             <span class="d-none d-md-inline">{{ Auth::user()->name ?? '' }}</span>
         </a>
         
         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
             <li class="user-header bg-primary">
-                <img src="{{ asset('storage/avatars/no-avatar.jpg') }}" class="img-circle elevation-2" alt="User Image">
+                <img src="{{ asset('./img/no-avatar.jpg') }}" class="img-circle elevation-2" alt="User Image">
                 <p>
                     {{ Auth::user()->name ?? '' }} 
                     <small>{{ Auth::user()->getRole(Auth::user()->role) ?? '' }}</small>

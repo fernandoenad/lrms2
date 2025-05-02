@@ -42,7 +42,7 @@
                     </div>
                     
                     <div class="widget-user-image">
-                        <img class="img-circle elevation-2" src="{{ asset('storage/images/file-icon.png') }}" alt="User Avatar">
+                        <img class="img-circle elevation-2" src="{{ asset('./img/file-icon.png') }}" alt="User Avatar">
                     </div>
 
                     <div class="card-footer">

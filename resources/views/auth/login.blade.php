@@ -2,11 +2,11 @@
 
 @section('content')
 <div class="row d-flex justify-content-center">			
-	<div class="col-md-4">
+	<div class="col-md-3">
 		<div class="card">
 			<div class="card-body login-card-body">
 				<div class="row d-flex justify-content-center">
-					<img src="{{ asset('storage/images/lock.png') }} " width="80">
+					<img src="{{ asset('./img/logo.png') }}" width="80">
 				</div>
 
 				<div class="row d-flex justify-content-center">

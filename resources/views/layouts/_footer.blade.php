@@ -2,7 +2,7 @@
     <div class="float-right d-none d-sm-inline">
         Developed by 
         <a href="mailto:fernando.enad@deped.gov.ph">
-            Fernando B. Enad
+            Dr. Fernando B. Enad
         </a>
     </div>
 
