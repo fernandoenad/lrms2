@@ -67,7 +67,7 @@
 
                     <div class="card-footer">
                         <div class="text-right">
-                            <a href="{{ asset('storage/' . $content->attachment) }}" download class="btn btn-sm btn-primary">
+                            <a href="{{ $content->attachment }}" target="_blank" class="btn btn-sm btn-primary">
                                 <i class="fas fa-download"></i> Download
                             </a>
                             @if(Auth::user()->role <= 2) 

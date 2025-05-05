@@ -113,7 +113,7 @@
 
                                 <span class="float-right">
                                     <a href="{{ route('content.show.report', $content->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-exclamation-triangle"></i> Report</a>
-                                    <a href="{{ route('content.download', $content->id) }}" class="btn btn-primary btn-sm btn-sm"><i class="fas fa-download"></i> Download</a>
+                                    <a href="{{ route('content.download', $content->id) }}" target="_blank" class="btn btn-primary btn-sm btn-sm"><i class="fas fa-download"></i> Download</a>
                                 </span>
                             </div> 
                         </div>   

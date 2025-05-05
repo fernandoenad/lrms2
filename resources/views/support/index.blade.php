@@ -1,4 +1,4 @@
-@extends('layouts.home')
+@extends('layouts.my')
 
 @section('content')
 <div class="row mb-4">

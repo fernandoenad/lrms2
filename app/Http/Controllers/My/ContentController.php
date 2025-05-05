@@ -87,12 +87,15 @@ class ContentController extends Controller
             'user_id' => Auth::user()->id,
             ]);
         
+        /** 
         $file = Storage::disk('public')->path($content->attachment);
         $file_info = pathinfo($file);
         $file_ext = $file_info['extension'];
         $file_download = Storage::disk('public')->download($content->attachment, $content->name . '.' . $file_ext);
+        */
+        return redirect()->away($content->attachment);
 
-        return $file_download;               
+        //return $file_download;               
     }
 
     public function show(Content $content)

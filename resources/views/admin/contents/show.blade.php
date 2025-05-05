@@ -42,7 +42,7 @@
                     </div>
                     
                     <div class="widget-user-image">
-                        <img class="img-circle elevation-2" src="{{ asset('storage/images/file-icon.png') }}" alt="User Avatar">
+                        <img class="img-circle elevation-2" src="{{ asset('./img/file-icon.png') }}" alt="User Avatar">
                     </div>
 
                     <div class="card-footer">
@@ -112,7 +112,12 @@
                                 </span>
 
                                 <span class="float-right">
-                                    <a href="{{ asset('storage/' . $content->attachment) }}" download class="btn btn-primary btn-sm btn-sm"><i class="fas fa-download"></i> Download</a>
+                                    <a href="{{ $content->attachment }}" download target="_blank">
+                                        <span class="btn btn-primary btn-sm btn-sm">
+                                            <i class="fas fa-download"></i>
+                                            Download
+                                        </span>
+                                    </a>    
                                     <a href="{{ route('admin.contents.edit', $content->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Modify</a>
                                 </span>
                             </div> 

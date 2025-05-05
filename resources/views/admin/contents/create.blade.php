@@ -132,6 +132,7 @@
     </div>
 </div>
 
+<!--
 <div class="modal fade" id="progress-modal">
     <div class="modal-dialog modal-md">
         <div class="modal-content bg-default">
@@ -142,5 +143,5 @@
         </div>
     </div>
 </div>
-
+-->
 @endsection

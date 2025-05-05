@@ -38,7 +38,7 @@
                             ->where('contents.id', '=', $content->id)
                             ->count() ?? '' }})  
                         &nbsp;
-                        <a href="{{ route('content.download', $content->id) }}">
+                        <a href="{{ route('content.download', $content->id) }}" target="_blank">
                             Download</a>
                         ({{ $content->join('downloads', 'contents.id', '=', 'downloads.content_id')
                                 ->where('contents.id', '=', $content->id)

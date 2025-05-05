@@ -142,7 +142,7 @@
                                                 {{ $content->getVisibility($content->visibility) ?? '' }}
                                             </span>
                                             <br>
-                                            <a href="{{ asset('storage/' . $content->attachment) }}" download>
+                                            <a href="{{ $content->attachment }}" download>
                                                 <span class="badge badge-info">
                                                     <i class="fas fa-download"></i>
                                                     Download

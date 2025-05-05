@@ -174,6 +174,7 @@ class ContentController extends Controller
             'course_id' => ['required'],
             'name' => ['required', 'string', 'min:3', 'max:255', Rule::unique('contents')->ignore($content->id)],
             'description' => ['required', 'string', 'min:3', 'max:255'],
+            'attachment' => ['required'],
             'status' => ['required'],
             ]);
 
@@ -183,7 +184,13 @@ class ContentController extends Controller
             'content_id' => $content->id,
             'user_id' => Auth::user()->id,
         ]);
+    
+        $content->update(array_merge($data, [
+            'user_id' => Auth::user()->id,
+            'visibility' => ($data['status'] == 3 ? 1 : 0),
+        ]));
 
+        /** 
         if(request()->attachment){
             $ext = request()->file('attachment')->extension();
             $new_name = str_replace([' ', '/'], '', $content->name);
@@ -197,7 +204,7 @@ class ContentController extends Controller
             $newFilePath = 'storage/resources/' . str_replace(' ', '', $content->name) . '-' . $unique_suffix . '.' . $file_ext;
             rename($filePath, $newFilePath);
             $newFilePath = 'resources/' . str_replace(' ', '', $content->name) . '-' . $unique_suffix . '.' . $file_ext;
-            */
+            
             $content->update(array_merge($data, [
                 'attachment' => str_replace('public/','', $path),
                 'user_id' => Auth::user()->id,
@@ -208,7 +215,8 @@ class ContentController extends Controller
                 'user_id' => Auth::user()->id,
                 'visibility' => ($data['status'] == 3 ? 1 : 0),
             ]));
-        }        
+        }  
+        */      
 
         return redirect()->route('admin.contents.show', compact('content'))->with('status', 'Content was successfully updated.');
     }
