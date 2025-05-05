@@ -2,6 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Providers\RouteServiceProvider;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,6 +20,28 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+Route::get('/auth/google', function () {
+    return Socialite::driver('google')->redirect();
+});
+
+Route::get('/auth/google/callback', function () {
+    $googleUser = Socialite::driver('google')->stateless()->user();
+
+    if (!str_ends_with($googleUser->getEmail(), '@deped.gov.ph')) {
+        return redirect('/login')->with('not_deped','Only DepEd emails are allowed.');
+    }
+
+    // Check if user already exists
+    $user = User::where('email', $googleUser->getEmail())->first();
+
+    if (!$user) {
+        return redirect('/login')->with('not_reg', 'DepEd email is not registered.');
+    }
+
+    Auth::login($user);
+
+    return redirect(session('url.intended', RouteServiceProvider::HOME));
+});
 
 Route::get('/', function () {
     return redirect()->route('home');

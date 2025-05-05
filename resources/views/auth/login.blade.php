@@ -13,6 +13,7 @@
 					<p>Sign in to start your session</p>
 				</div>
 
+				<!--
 				<div class="row d-flex justify-content-center">
 					<p>
 					@if(session('error'))
@@ -107,6 +108,45 @@
 							</button>
 						</div>
 					</div>
+					-->
+					<div class="social-auth-links text-center mb-3">
+                        <!--
+                        <p>- OR -</p>
+                        <a href="#" class="btn btn-block btn-primary">
+                        <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+                        </a>
+                        
+                        <a href="{{ url('/auth/google') }}" class="btn btn-block btn-success">
+                        <i class="fab fa-google mr-2"></i> Sign in using Google
+                        </a>
+                        -->
+
+                        <a href="{{ url('/auth/google') }}" class="google-btn">
+							<img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" width="10%">
+							Sign in with DepEd GMail
+						</a>
+                        <br>
+                        <br>
+                        
+                        @if (session('not_reg'))
+							<div class="alert alert-warning">
+								<strong>{{ session('not_reg') }}</strong>
+								<a href="./rms/register">Register?</a>
+							</div>
+							<br>
+						@endif
+						@if (session('not_deped'))
+							<div class="alert alert-warning">
+								<strong>{{ session('not_deped') }}</strong>										
+                            </div>
+                            <br>
+						@endif
+
+                        
+                        Forgot your DepEd GMail/Microsoft password? <br>
+						Request for reset
+						<a href="https://hrms.depedbohol.org/help/reset" target="_blank" class="google-btn">here</a>.
+                    </div>
 				</form>
 			</div>
 		</div>
