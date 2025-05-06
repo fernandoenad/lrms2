@@ -19,9 +19,8 @@ class MyContentsController extends Controller
     }
 
     public function index()
-    {
-        $contents = Content::join('courses', 'contents.course_id', '=', 'courses.id')
-            ->where('courses.user_id', '=', Auth::user()->id)
+    {   
+        $contents = Content::where('contents.user_id', '=', Auth::user()->id)
             ->orderBy('contents.name', 'asc')
             ->select('contents.*')
             ->paginate(15);
@@ -67,20 +66,18 @@ class MyContentsController extends Controller
         $route_name = request()->route()->getName();
 
         if($route_name == 'admin.mycontents.shown'){
-            $status = 3;
+            //$status = 3;
             $visibility = 1;
         } else if($route_name == 'admin.mycontents.hidden'){
-            $status = 3;
+            //$status = 3;
             $visibility = 0;
         } else if($route_name == 'admin.mycontents.submissions'){
-            $status = '%';
+            //$status = '%';
             $visibility = '%';
         }  
 
-        $contents = Content::join('courses', 'contents.course_id', '=', 'courses.id')
-            ->where('courses.user_id', '=', Auth::user()->id)
-            ->where('contents.status', 'like', $status)
-            ->where('contents.visibility', '=', $visibility)
+        $contents = Content::where('contents.user_id', '=', Auth::user()->id)
+            ->where('contents.visibility', 'LIKE', $visibility)
             ->orderBy('name', 'asc')
             ->select('contents.*')
             ->paginate(15);
@@ -157,12 +154,12 @@ class MyContentsController extends Controller
             'attachment' => ['required'],
             ]);
 
-        $filePath = 'storage/' . request()->attachment->store('resources', 'public');
-        $file_ext = File::extension($filePath);
-        $unique_suffix = strtotime(now());
-        $newFilePath = 'storage/resources/' . $data['name'] . '-' . $unique_suffix . '.' . $file_ext;
-        rename($filePath, $newFilePath);
-        $newFilePath = 'resources/' . $data['name'] . '-' . $unique_suffix . '.' . $file_ext;
+        //$filePath = 'storage/' . request()->attachment->store('resources', 'public');
+        //$file_ext = File::extension($filePath);
+        //$unique_suffix = strtotime(now());
+        //$newFilePath = 'storage/resources/' . $data['name'] . '-' . $unique_suffix . '.' . $file_ext;
+        //rename($filePath, $newFilePath);
+        //$newFilePath = 'resources/' . $data['name'] . '-' . $unique_suffix . '.' . $file_ext;
 
         $contentLast = Content::where('course_id', '=', $data['course_id'])
             ->orderBy('id', 'desc')
@@ -177,7 +174,6 @@ class MyContentsController extends Controller
         $content = Content::create(array_merge($data, [
             'datefrom' => now(),
             'dateto' => now(),
-            'attachment' => $newFilePath,
             'sort' => $sort,
             'user_id' => Auth::user()->id,
             'status' => 1,
@@ -203,6 +199,7 @@ class MyContentsController extends Controller
             'course_id' => ['required'],
             'name' => ['required', 'string', 'min:3', 'max:255', Rule::unique('contents')->ignore($content->id)],
             'description' => ['required', 'string', 'min:3', 'max:255'],
+            'attachment' => ['required'],
             ]);
 
         $content->contentlog()->create([
@@ -212,6 +209,11 @@ class MyContentsController extends Controller
             'user_id' => Auth::user()->id,
         ]);
 
+        $content->update(array_merge($data, [
+            'user_id' => Auth::user()->id,
+        ]));
+        
+        /*
         if(request()->attachment){
             $filePath = 'storage/' . request()->attachment->store('resources', 'public');
             $file_ext = File::extension($filePath);
@@ -229,6 +231,7 @@ class MyContentsController extends Controller
                 'user_id' => Auth::user()->id,
             ]));
         }    
+        */
 
         return redirect()->route('admin.mycontents.course.display', compact('content', 'course'))->with('status', 'Content was successfully updated.');
     }

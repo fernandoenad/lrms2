@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+<!-- Controller: Admin/MyContentsController | For Personnel Role-->
 <div class="row mb-4">
     <div class="col-sm-6">
         @if(Route::currentRouteName() == 'admin.mycontents.course')
@@ -33,10 +34,8 @@
                         <span class="info-box-text">Shown</span>
                         <span class="info-box-number">
                             <a href="{{ route('admin.mycontents.shown') }}">    
-                                {{ number_format(App\Models\Content::join('courses', 'contents.course_id', '=', 'courses.id')
-                                    ->where('courses.user_id', '=', Auth::user()->id)
+                                {{ number_format(App\Models\Content::where('contents.user_id', '=', Auth::user()->id)
                                     ->where('contents.visibility', '=', 1)
-                                    ->where('contents.status', '=', 3)
                                     ->get()->count(), 0) }}
                              </a>
                         </span>
@@ -52,11 +51,10 @@
                         <span class="info-box-text">Hidden</span>
                         <span class="info-box-number">
                             <a href="{{ route('admin.mycontents.hidden') }}">    
-                                {{ number_format(App\Models\Content::join('courses', 'contents.course_id', '=', 'courses.id')
-                                    ->where('courses.user_id', '=', Auth::user()->id)
+                                {{ number_format(App\Models\Content::where('contents.user_id', '=', Auth::user()->id)
                                     ->where('contents.visibility', '=', 0)
-                                    ->where('contents.status', '=', 3)
                                     ->get()->count(), 0) }}
+                                
                              </a>
                         </span>
                     </div>
@@ -71,9 +69,7 @@
                         <span class="info-box-text">My Submissions</span>
                         <span class="info-box-number">
                             <a href="{{ route('admin.mycontents.submissions') }}">    
-                                {{ number_format(App\Models\Content::join('courses', 'contents.course_id', '=', 'courses.id')
-                                    ->where('courses.user_id', '=', Auth::user()->id)
-                                    ->where('contents.status', '<', 3)
+                                {{ number_format(App\Models\Content::where('contents.user_id', '=', Auth::user()->id)
                                     ->get()->count(), 0) }}
                              </a>
                         </span>

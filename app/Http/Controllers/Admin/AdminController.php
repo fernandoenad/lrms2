@@ -16,15 +16,23 @@ class AdminController extends Controller
 
     public function index()
     {
-        $contents = $this->getContentList();            
-        $contents_f = $contents->orderBy('id', 'desc')
+        $contents = $this->getContentList();   
+
+        $contents_f = $contents->where('visibility', '1')
+            ->where('status', '3')
+            ->orderBy('id', 'desc')
             ->take(10)
             ->get();
+
         $contents_c = $contents->count();        
         $inventories_c = $this->getInventoryList();
         $users_c = $this->getUserList()->count();
 
-        return view('admin.index', compact('contents_c', 'inventories_c', 'users_c', 'contents_f'));
+        if(auth()->user()->role < 3){
+            return view('admin.index', compact('contents_c', 'inventories_c', 'users_c', 'contents_f'));
+        } else {
+            return redirect(route('admin.mycontents'));
+        }
     }
 
     public function getContentList()

@@ -33,9 +33,36 @@ Route::get('/auth/google/callback', function () {
 
     // Check if user already exists
     $user = User::where('email', $googleUser->getEmail())->first();
+    $email = $googleUser->getEmail();
 
     if (!$user) {
-        return redirect('/login')->with('not_reg', 'DepEd email is not registered.');
+        //return redirect('/login')->with('not_reg', 'DepEd email is not registered.');
+        $username = explode('@', $email)[0];
+
+        if (is_numeric($username)) {
+            // Fallback: use Google's provided name instead
+            // $name = $googleUser->getName(); // like "Juan Dela Cruz"
+            $role = 4;
+            $service = "School";
+        } else {
+            // Prettify the username (optional)
+            // $name = ucwords(str_replace('.', ' ', $username)); // "juan.delacruz" → "Juan Delacruz"
+            $role = 3;
+            $service = "Personnel";
+        }
+
+        $user = User::create([
+            'name' => $googleUser->getName(),
+            'email' => $googleUser->getEmail(),
+            'password' => bcrypt(Str::random(16)), // dummy password, since login is via Google
+            'google_id' => $googleUser->getId(),   // if you store google_id
+            'username' => $username,
+            'image' => 'avatars/no-avatar.jpg',
+            'service' => $service,
+            'district' => 'SDO Bohol',
+            'role' => $role,
+            'status' => 1,
+        ]);        
     }
 
     Auth::login($user);

@@ -109,10 +109,9 @@ class ContentController extends Controller
             'status' => ['required'],
             ]);
 
-        $ext = request()->file('attachment')->extension();
-        $new_name = str_replace([' ', '/'], '', request()->name);
-        $path = Storage::putFileAs('public/resources', request()->file('attachment'), $new_name . '-' . strtotime(now()) . '.' . $ext);
-        
+        //$ext = request()->file('attachment')->extension();
+        //$new_name = str_replace([' ', '/'], '', request()->name);
+        //$path = Storage::putFileAs('public/resources', request()->file('attachment'), $new_name . '-' . strtotime(now()) . '.' . $ext);
         //dd($path);
         /*    
         $filePath = 'storage/' . request()->file('attachment')->store('resources', 'public');
@@ -137,7 +136,6 @@ class ContentController extends Controller
         $content = Content::create(array_merge($data, [
             'datefrom' => now(),
             'dateto' => now(),
-            'attachment' => str_replace('public/','', $path),
             'sort' => $sort,
             'user_id' => Auth::user()->id,
             'visibility' => ($data['status'] == 3 ? 1 : 0),
@@ -186,7 +184,6 @@ class ContentController extends Controller
         ]);
     
         $content->update(array_merge($data, [
-            'user_id' => Auth::user()->id,
             'visibility' => ($data['status'] == 3 ? 1 : 0),
         ]));
 

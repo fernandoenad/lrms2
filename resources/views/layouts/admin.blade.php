@@ -61,18 +61,6 @@
 							</a>
 						</li>
 					@endif
-					
-					<li class="nav-item 
-						@if(Route::currentRouteName() == 'admin.reports' ||
-							Route::currentRouteName() == 'admin.reports.show'						
-						)
-							{{ 'menu-open' }} @endif">
-
-						<a href="{{ route('admin.reports') }}" class="nav-link">
-							<i class="nav-icon fas fa-inbox"></i>
-							<p>Report Mgmt</p>
-						</a>
-					</li> 
 
 					@if(Auth::user()->role < 3)	
 						<li class="nav-item
@@ -122,6 +110,18 @@
 							</a>
 						</li> 
 
+						<li class="nav-item 
+							@if(Route::currentRouteName() == 'admin.reports' ||
+								Route::currentRouteName() == 'admin.reports.show'						
+							)
+								{{ 'menu-open' }} @endif">
+
+							<a href="{{ route('admin.reports') }}" class="nav-link">
+								<i class="nav-icon fas fa-inbox"></i>
+								<p>Report Mgmt</p>
+							</a>
+						</li> 
+						
 						<li class="nav-item">
 							<a href="" class="nav-link" onClick="alert('Feature not yet available!'); return false;">
 								<i class="nav-icon fas fa-list"></i>
@@ -133,7 +133,8 @@
 							@if(Route::currentRouteName() == 'admin.users' || 
 								Route::currentRouteName() == 'admin.users.edit' ||
 								Route::currentRouteName() == 'admin.users.disable' ||
-								Route::currentRouteName() == 'admin.users.reset'
+								Route::currentRouteName() == 'admin.users.reset' ||
+								Route::currentRouteName() == 'admin.users.create'
 							) 
 								{{ 'menu-open' }} @endif">
 							<a href="{{ route('admin.users')}}" class="nav-link">

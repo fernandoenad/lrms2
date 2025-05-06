@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+<!-- Controller: Admin/ContentController | For Manager Role-->
 <div class="row mb-4">
     <div class="col-sm-6">
         <h1 class="m-0 text-dark"> New Content</h1>
@@ -33,7 +34,7 @@
                         <select id="course_id" type="text" class="form-control @error('course_id') is-invalid @enderror" name="course_id" value="{{ old('course_id') }}" autocomplete="course_id" autofocus>
                             <option value="">Select</option>
                             @foreach($courses as $course)
-                                <option value="{{ $course->id }}" @if(old('course_id') == $course->id) ?? {{ 'selected' }} @endif>{{ $course->name }} ({{ $course->category->name }})</option>
+                                <option value="{{ $course->id }}" @if(old('course_id') == $course->id) ?? {{ 'selected' }} @endif>{{ $course->name ?? '' }} ({{ $course->category->name ?? '' }})</option>
                             @endforeach                            
                         </select>
 
@@ -77,8 +78,17 @@
                     <label for="attachment" class="col-md-2 col-form-label text-md-right">{{ __('Attachment') }}</label>
 
                     <div class="col-md-10">
+                        <input id="attachment" type="text" class="form-control @error('attachment') is-invalid @enderror" name="attachment" value="{{ old('attachment') ??  $content->attachment ?? '' }}" autocomplete="attachment" autofocus>
+                        <!--
                         <input id="attachment" type="file" class="form-control-file @error('attachment') is-invalid @enderror" name="attachment" value="{{ old('attachment') }}" autocomplete="attachment" autofocus>
-
+                        
+                        <small>
+                            Current attachment: 
+                            <strong class="text-danger">
+                                {{  $content->attachment ?? '' }}
+                            </strong>
+                        </small>
+                        -->
                         @error('attachment')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

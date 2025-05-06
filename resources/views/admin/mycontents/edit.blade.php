@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+<!-- Controller: Admin/MyContentsController | For Personnel Role-->
 <div class="row mb-4">
     <div class="col-sm-6">
         <h1 class="m-0 text-dark">Modify Content</h1>
@@ -74,17 +75,20 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="attachment" class="col-md-2 col-form-label text-md-right">{{ __('Attachment') }}</label>
+                    <label for="attachment" class="col-md-2 col-form-label text-md-right">{{ __('GDrive Link') }}</label>
 
                     <div class="col-md-10">
+                        <input id="attachment" type="text" class="form-control @error('attachment') is-invalid @enderror" name="attachment" value="{{ old('attachment') ??  $content->attachment ?? '' }}" autocomplete="attachment" autofocus>
+                        <!--
                         <input id="attachment" type="file" class="form-control-file @error('attachment') is-invalid @enderror" name="attachment" value="{{ old('attachment') }}" autocomplete="attachment" autofocus>
+                        
                         <small>
                             Current attachment: 
                             <strong class="text-danger">
                                 {{  $content->attachment ?? '' }}
                             </strong>
                         </small>
-
+                        -->
                         @error('attachment')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -119,6 +123,7 @@
     </div>
 </div>
 
+<!--
 <div class="modal fade" id="progress-modal">
     <div class="modal-dialog modal-md">
         <div class="modal-content bg-default">
@@ -129,4 +134,5 @@
         </div>
     </div>
 </div>
+-->
 @endsection

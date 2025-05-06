@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+<!-- Controller: Admin/ContentController | For Manager Role-->
 <div class="row mb-4">
     <div class="col-sm-6">
         <h1 class="m-0 text-dark">Contents</h1>
@@ -142,7 +143,7 @@
                                                 {{ $content->getVisibility($content->visibility) ?? '' }}
                                             </span>
                                             <br>
-                                            <a href="{{ $content->attachment }}" download>
+                                            <a href="{{ $content->attachment }}" target="_blank">
                                                 <span class="badge badge-info">
                                                     <i class="fas fa-download"></i>
                                                     Download

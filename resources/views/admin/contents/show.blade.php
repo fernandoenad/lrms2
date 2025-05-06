@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+<!-- Controller: Admin/ContentController | For Manager Role-->
 <div class="row mb-4">
     <div class="col-sm-6">
         <h1 class="m-0 text-dark">Content</h1>

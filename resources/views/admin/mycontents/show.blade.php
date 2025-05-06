@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+<!-- Controller: Admin/MyContentsController | For Personnel Role-->
 <div class="row mb-4">
     <div class="col-sm-6">
         <h1 class="m-0 text-dark">Content</h1>
@@ -41,7 +42,7 @@
                     </div>
                     
                     <div class="widget-user-image">
-                        <img class="img-circle elevation-2" src="{{ asset('storage/images/file-icon.png') }}" alt="User Avatar">
+                        <img class="img-circle elevation-2" src="{{ asset('./img/file-icon.png') }}" alt="User Avatar">
                     </div>
 
                     <div class="card-footer">
@@ -109,7 +110,7 @@
                                 </span>
 
                                 <span class="float-right">
-                                    <a href="{{ asset('storage/' . $content->attachment) }}" download class="btn btn-primary btn-sm btn-sm"><i class="fas fa-download"></i> Download</a>
+                                    <a href="{{ $content->attachment }}" download target="_blank" class="btn btn-primary btn-sm btn-sm"><i class="fas fa-download"></i> Download</a>
                                     @if($content->status <= 2)  
                                         <a href="{{ route('admin.mycontents.edit', [$content->course->id, $content->id]) }}" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Modify</a>
                                     @endif                                    
@@ -169,7 +170,7 @@
                                                                 Description: <span class="badge badge-default">
                                                                     {{ $data['description'] }}
                                                                 </span> <br>
-                                                                Attachment: <a href="{{ asset('storage/' . $data['attachment']) }}" download>
+                                                                Attachment: <a href="{{$data['attachment'] }}" target="_blank">
                                                                     <span class="badge badge-default"><i class="fas fa-download"></i> Download
                                                                 </span></a><br>
                                                                 Course: <span class="badge badge-default">

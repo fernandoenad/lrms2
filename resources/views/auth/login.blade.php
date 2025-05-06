@@ -131,7 +131,7 @@
                         @if (session('not_reg'))
 							<div class="alert alert-warning">
 								<strong>{{ session('not_reg') }}</strong>
-								<a href="./rms/register">Register?</a>
+								<!--<a href="./rms/register">Register?</a>-->
 							</div>
 							<br>
 						@endif
