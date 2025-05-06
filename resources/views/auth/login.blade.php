@@ -3,6 +3,7 @@
 @section('content')
 <div class="row d-flex justify-content-center">			
 	<div class="col-md-3">
+		<br>
 		<div class="card">
 			<div class="card-body login-card-body">
 				<div class="row d-flex justify-content-center">
