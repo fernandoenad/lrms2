@@ -7,7 +7,7 @@
     </div>
 
     <strong>
-        Copyright &copy; 2020 
+        Copyright &copy; 2025
         <a href="{{ route('home') }}">{{ config('app.name', 'Laravel') }}</a>.
     </strong> All rights reserved.
 </footer>  
