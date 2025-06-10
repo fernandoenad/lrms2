@@ -134,7 +134,8 @@
 								Route::currentRouteName() == 'admin.users.edit' ||
 								Route::currentRouteName() == 'admin.users.disable' ||
 								Route::currentRouteName() == 'admin.users.reset' ||
-								Route::currentRouteName() == 'admin.users.create'
+								Route::currentRouteName() == 'admin.users.create' || 
+								Route::currentRouteName() == 'admin.users.search'
 							) 
 								{{ 'menu-open' }} @endif">
 							<a href="{{ route('admin.users')}}" class="nav-link">
