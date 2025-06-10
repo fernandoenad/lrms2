@@ -33,10 +33,18 @@ class ContentController extends Controller
 
     public function getContents($status, $visibility)
     {
-        $contents = Content::where('contents.status', 'like', $status)
-            ->where('contents.visibility', 'like', $visibility)
-            ->orderBy('contents.id', 'desc');
-        
+        if(auth()->user()->role == 1){
+            $contents = Content::where('contents.status', 'like', $status)
+                ->where('contents.visibility', 'like', $visibility)
+                ->orderBy('contents.id', 'desc');
+        } else {
+            $contents = Content::join('courses', 'courses.id', '=', 'contents.course_id')
+                ->where('contents.status', 'like', $status)
+                ->where('contents.visibility', 'like', $visibility)
+                ->where('courses.user_id', '=', auth()->user()->id)
+                ->orderBy('contents.id', 'desc');
+        }
+
         return $contents;
     }
 
@@ -93,7 +101,8 @@ class ContentController extends Controller
 
     public function create()
     {
-        $courses = Course::orderBy('name', 'asc')
+        $courses = Course::where('user_id', '=', auth()->user()->id)
+            ->orderBy('name', 'asc')
             ->get();
 
         return view('admin.contents.create', compact('courses'));

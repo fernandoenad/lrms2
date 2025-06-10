@@ -183,10 +183,11 @@
                                 <div class="col-md-9">
                                     <select id="role" type="text" class="form-control @error('role') is-invalid @enderror" name="role" value="{{ old('role') ?? $user->role }}" autocomplete="role" autofocus>
                                         <option value="">Select</option>
+                                        <option value="1" @if(old('role') == 1 || $user->role == 1) {{ 'selected '}} @endif>Administrator</option>
                                         <option value="2" @if(old('role') == 2 || $user->role == 2) {{ 'selected '}} @endif>Manager</option>
-                                        <option value="3" @if(old('role') == 3 || $user->role == 3) {{ 'selected '}} @endif>Personnel</option>
-                                        <option value="4" @if(old('role') == 4 || $user->role == 4) {{ 'selected '}} @endif>User</option>
-                                        <option value="5" @if(old('role') == 5 || $user->role == 5) {{ 'selected' }} @endif>Coordinator</option>
+                                        <option value="3" @if(old('role') == 3 || $user->role == 3) {{ 'selected '}} @endif>TWG Member</option>
+                                        <option value="4" @if(old('role') == 4 || $user->role == 4) {{ 'selected '}} @endif>School</option>
+                                        <option value="5" @if(old('role') == 5 || $user->role == 5) {{ 'selected' }} @endif>Personnel</option>
                                     </select>
                                     @error('role')
                                         <span class="invalid-feedback" role="alert">
@@ -313,10 +314,11 @@
                                 <div class="col-md-9">
                                     <select id="role" type="text" class="form-control @error('role') is-invalid @enderror" name="role" value="{{ old('role') }}" autocomplete="role" autofocus>
                                         <option value="">Select</option>
+                                        <option value="1" @if(old('role') == 1) {{ 'selected' }} @endif>Administrator</option>
                                         <option value="2" @if(old('role') == 2) {{ 'selected' }} @endif>Manager</option>
-                                        <option value="3" @if(old('role') == 3) {{ 'selected' }} @endif>Personnel</option>
-                                        <option value="4" @if(old('role') == 4) {{ 'selected' }} @endif>User</option>
-                                        <option value="5" @if(old('role') == 5) {{ 'selected' }} @endif>Coordinator</option>
+                                        <option value="3" @if(old('role') == 3) {{ 'selected' }} @endif>TWG Member</option>
+                                        <option value="4" @if(old('role') == 4) {{ 'selected' }} @endif>School</option>
+                                        <option value="5" @if(old('role') == 5) {{ 'selected' }} @endif>Personnel</option>
                                     </select>
                                     @error('role')
                                         <span class="invalid-feedback" role="alert">
@@ -524,7 +526,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.users.create') }}" class="nav-link">
+                        <a href="#" class="nav-link" onclick="alert('The user can login using his or her DepEd Gmail account.')">
                             <i class="fas fa-user-plus"></i>
                             New 
                         </a>

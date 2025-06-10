@@ -69,13 +69,14 @@
                     </div>
                     </form>
                 </li>
-                
+                @if(Auth::user()->role == 1)
                 <li class="nav-item">
                     <a href="{{ route('admin.categories.create') }}" class="nav-link">
                         <i class="fas fa-plus-square"></i>
                         New 
                     </a>
                 </li>
+                @endif
             @endif
 
             @if(Route::currentRouteName() == 'admin.courses' ||
@@ -101,13 +102,14 @@
                     </div>
                     </form>
                 </li>
-                
+                @if(Auth::user()->role == 1)
                 <li class="nav-item">
                     <a href="{{ route('admin.courses.create', $category->id) }}" class="nav-link">
                         <i class="fas fa-plus-square"></i>
                         New 
                     </a>
                 </li>
+                @endif
             @endif
 
             @if(Route::currentRouteName() == 'admin.courses.allsearch' ||

@@ -15,6 +15,7 @@
 
 <div class="row">
     <div class="col-md-9">
+        <!--
         <div class="row">
             <div class="col-md-3">
                 <div class="info-box">
@@ -76,7 +77,7 @@
                 </div>
             </div>
         </div>
-
+        -->
         <div class="row">
             <div class="col-md-12">
                 @if(session('error'))
@@ -141,7 +142,7 @@
                                     <select id="user_id" type="text" class="form-control @error('user_id') is-invalid @enderror" name="user_id" value="{{ old('user_id') }}" autocomplete="user_id" autofocus>
                                         <option value="">Select</option>
                                         @foreach($personnels as $personnel)
-                                            <option value="{{ $personnel->id }}" @if(old('user_id') == $personnel->id) {{ 'selected'}} @endif>{{ $personnel->name }} ({{ $personnel->getRole($personnel->role) }})</option> 
+                                            <option value="{{ $personnel->id }}" @if(old('user_id') == $personnel->id) {{ 'selected'}} @endif>{{ $personnel->name }} | {{ $personnel->email }} ({{ $personnel->getRole($personnel->role) }})</option> 
                                         @endforeach
                                     </select>
 
@@ -195,7 +196,7 @@
                 @if(Route::currentRouteName() == 'admin.courses.edit')
                     <div class="card card-outline card-primary">
                         <div class="card-header border-transparent">
-                            Modify Category
+                            Modify Course
                         </div>
 
                         <div class="card-body">
@@ -239,7 +240,7 @@
                                     <select id="user_id" type="text" class="form-control @error('user_id') is-invalid @enderror" name="user_id" value="{{ old('user_id') }}" autocomplete="user_id" autofocus>
                                         <option value="">Select</option>
                                         @foreach($personnels as $personnel)
-                                            <option value="{{ $personnel->id }}" @if(old('user_id') == $personnel->id || $personnel->id == $course->user_id) {{ 'selected'}} @endif>{{ $personnel->name }} ({{ $personnel->getRole($personnel->role) }})</option> 
+                                            <option value="{{ $personnel->id }}" @if(old('user_id') == $personnel->id || $personnel->id == $course->user_id) {{ 'selected'}} @endif>{{ $personnel->name }} | {{ $personnel->email }} ({{ $personnel->getRole($personnel->role) }})</option> 
                                         @endforeach
                                     </select>
 
@@ -316,7 +317,8 @@
                                         @foreach($courses as $course)
                                             <tr>
                                                 <td>
-                                                    <a href="{{ route('admin.courses.show', $course->id) }}" title="Owner: {{ $course->user->name ?? '' }}">
+                                                    <a href="{{ route('admin.courses.show', $course->id) }}" title="Owner: {{ $course->user->name ?? '' }}"
+                                                        title="{{ $course->person }}">
                                                         <strong>{{ $course->name ?? '' }}</strong>
                                                     </a>
                                                 </td>
@@ -329,6 +331,7 @@
                                                     {{ $course->content->count() ?? '' }}
                                                 </td>
                                                 <td>
+                                                    @if(Auth::user()->role == 1)
                                                     <a href="{{ route('admin.courses.edit', [$course->category->id, $course->id]) }}" class="btn btn-warning btn-sm">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
@@ -338,6 +341,7 @@
                                                     <a href="{{ route('admin.courses.move-down', [$course->category->id, $course->id]) }}" class="btn btn-info btn-sm">
                                                         <i class="fas fa-arrow-down"></i>
                                                     </a>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach

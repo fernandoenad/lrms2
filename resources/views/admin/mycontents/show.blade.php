@@ -111,9 +111,7 @@
 
                                 <span class="float-right">
                                     <a href="{{ $content->attachment }}" download target="_blank" class="btn btn-primary btn-sm btn-sm"><i class="fas fa-download"></i> Download</a>
-                                    @if($content->status <= 2)  
-                                        <a href="{{ route('admin.mycontents.edit', [$content->course->id, $content->id]) }}" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Modify</a>
-                                    @endif                                    
+                                    <a href="{{ route('admin.mycontents.edit', [$content->course->id, $content->id]) }}" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Modify</a>
                                 </span>
                             </div> 
                         </div>   

@@ -20,7 +20,8 @@ class MyContentsController extends Controller
 
     public function index()
     {   
-        $contents = Content::where('contents.user_id', '=', Auth::user()->id)
+        $contents = Content::join('courses', 'courses.id', '=', 'contents.course_id')
+            ->where('courses.user_id', '=', Auth::user()->id)
             ->orderBy('contents.name', 'asc')
             ->select('contents.*')
             ->paginate(15);

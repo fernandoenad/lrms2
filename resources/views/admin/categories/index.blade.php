@@ -234,6 +234,7 @@
                                                 ->count() ?? '' }}
                                         </td>
                                         <td>
+                                            @if(Auth::user()->role == 1)
                                             <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-warning btn-sm">
                                                 <i class="fas fa-edit"></i>
                                             </a>
@@ -243,6 +244,7 @@
                                             <a href="{{ route('admin.categories.move-down', $category->id) }}" class="btn btn-info btn-sm">
                                                 <i class="fas fa-arrow-down"></i>
                                             </a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

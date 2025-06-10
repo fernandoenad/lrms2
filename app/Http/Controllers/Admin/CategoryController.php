@@ -25,8 +25,13 @@ class CategoryController extends Controller
 
     public function getcategories($visibility)
     {
-        $categories = Category::where('visibility', 'like', $visibility)
-            ->orderBy('sort', 'asc');
+        if(auth()->user()->role == 1){
+            $categories = Category::where('visibility', 'like', $visibility)
+                ->orderBy('sort', 'asc');
+        } else {
+            $categories = Category::where('visibility', 'like', 1)
+                ->orderBy('sort', 'asc');
+        }
 
         return $categories;
     }

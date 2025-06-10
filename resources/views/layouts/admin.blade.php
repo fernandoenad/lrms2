@@ -122,13 +122,13 @@
 							</a>
 						</li> 
 						
+						@if(Auth::user()->role == 1)
 						<li class="nav-item">
 							<a href="" class="nav-link" onClick="alert('Feature not yet available!'); return false;">
 								<i class="nav-icon fas fa-list"></i>
 								<p>Inventory Mgmt</p>
 							</a>
 						</li> 
-
 						<li class="nav-item 
 							@if(Route::currentRouteName() == 'admin.users' || 
 								Route::currentRouteName() == 'admin.users.edit' ||
@@ -149,6 +149,7 @@
 								<p>Site Settings</p>
 							</a>
 						</li> 
+						@endif
 					@endif
 				</ul>
 			</nav>

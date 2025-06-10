@@ -74,7 +74,12 @@ class CourseController extends Controller
         $courses = $this->getcourses($category, '%')->get();
         $shown_c = $this->getcourses($category, 1)->count();
         $hidden_c = $this->getcourses($category, 0)->count();
-        $personnels = User::whereBetween('role', [2, 3])->orderBy('name', 'asc')->get();
+
+        if(auth()->user()->role == 1){
+            $personnels = User::whereBetween('role', [2, 3])->orderBy('name', 'asc')->get();
+        } else {
+            $personnels = User::where('role', 3)->orderBy('name', 'asc')->get();
+        }
 
         return view('admin.courses.index', compact('categories', 'category', 'courses', 'shown_c', 'hidden_c', 'personnels'));
     }
@@ -112,7 +117,12 @@ class CourseController extends Controller
         $courses = $this->getcourses($category, '%')->get();
         $shown_c = $this->getcourses($category, 1)->count();
         $hidden_c = $this->getcourses($category, 0)->count();
-        $personnels = User::whereBetween('role', [2, 3])->orderBy('name', 'asc')->get();
+
+        if(auth()->user()->role == 1){
+            $personnels = User::whereBetween('role', [2, 3])->orderBy('name', 'asc')->get();
+        } else {
+            $personnels = User::where('role', 3)->orderBy('name', 'asc')->get();
+        }
 
         return view('admin.courses.index', compact('categories', 'category', 'courses', 'course', 'shown_c', 'hidden_c', 'personnels'));
     }
@@ -196,9 +206,13 @@ class CourseController extends Controller
 
     public function show(Course $course)
     {
-        $contents = Content::where('course_id', '=', $course->id)
+        if($course->user_id == auth()->user()->id || auth()->user()->role == 1){
+            $contents = Content::where('course_id', '=', $course->id)
             ->orderBy('sort', 'asc')
-            ->paginate(15);;
+            ->paginate(15);  
+        } else {
+            abort(401);
+        }
 
         return view('admin.courses.show', compact('course', 'contents'));
     }

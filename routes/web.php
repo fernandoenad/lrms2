@@ -47,7 +47,7 @@ Route::get('/auth/google/callback', function () {
         } else {
             // Prettify the username (optional)
             // $name = ucwords(str_replace('.', ' ', $username)); // "juan.delacruz" → "Juan Delacruz"
-            $role = 3;
+            $role = 5;
             $service = "Personnel";
         }
 

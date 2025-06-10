@@ -18,10 +18,12 @@ class ReportController extends Controller
 
     public function index()
     {
-        $contentreports = ContentReport::where('user_id', 'like', (Auth::user()->role <= 2 ? '%' : Auth::user()->id))
-            ->where('status', 'like', '%')
-            ->orderBy('status', 'asc')
-            ->orderBy('created_at', 'asc')
+        $contentreports = ContentReport::join('contents', 'contents.id', '=', 'content_reports.content_id')
+            ->join('courses', 'courses.id', 'contents.course_id')
+            ->where('courses.user_id', 'like', (Auth::user()->role == 1 ? '%' : Auth::user()->id))
+            ->where('content_reports.status', 'like', '%')
+            ->orderBy('content_reports.status', 'asc')
+            ->orderBy('content_reports.created_at', 'asc')
             ->paginate(15);
 
         return view('admin.reports.index', compact('contentreports'));

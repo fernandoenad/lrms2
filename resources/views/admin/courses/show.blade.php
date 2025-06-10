@@ -113,25 +113,28 @@
                                                 <td>{{ $content->user->name ?? '' }}</td>
                                                 <td class="text-right">{{ $content->download->count() ?? '' }}</td>
                                                 <td class="text-right">
-                                                    @if($content->visibility == 1 && $content->status == 3)
-                                                        <a href="{{ route('admin.contents.hide', $content->id) }}" class="btn btn-primary btn-sm">
-                                                            <i class="fas fa-eye-slash"></i>
+                                                    @if(Auth::user()->role < 3)
+                                                        @if($content->visibility == 1 && $content->status == 3)
+                                                            <a href="{{ route('admin.contents.hide', $content->id) }}" class="btn btn-primary btn-sm">
+                                                                <i class="fas fa-eye-slash"></i>
+                                                            </a>  
+                                                        @elseif($content->visibility == 0 && $content->status == 3)
+                                                            <a href="{{ route('admin.contents.show', $content->id) }}" class="btn btn-primary btn-sm">
+                                                                <i class="fas fa-eye"></i>
+                                                            </a>   
+                                                        @elseif($content->visibility == 0 && $content->status < 3)                                                     
+                                                        @endif 
+                                                        <a href="{{ route('admin.contents.edit', $content->id) }}" class="btn btn-warning btn-sm">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
+                                                    
+                                                        <a href="{{ route('admin.contents.move-up', $content->id) }}" class="btn btn-info btn-sm">
+                                                            <i class="fas fa-arrow-up"></i>
+                                                        </a>
+                                                        <a href="{{ route('admin.contents.move-down', $content->id) }}" class="btn btn-info btn-sm">
+                                                            <i class="fas fa-arrow-down"></i>
                                                         </a>  
-                                                    @elseif($content->visibility == 0 && $content->status == 3)
-                                                        <a href="{{ route('admin.contents.show', $content->id) }}" class="btn btn-primary btn-sm">
-                                                            <i class="fas fa-eye"></i>
-                                                        </a>   
-                                                    @elseif($content->visibility == 0 && $content->status < 3)                                                     
-                                                    @endif 
-                                                    <a href="{{ route('admin.contents.edit', $content->id) }}" class="btn btn-warning btn-sm">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                    <a href="{{ route('admin.contents.move-up', $content->id) }}" class="btn btn-info btn-sm">
-                                                        <i class="fas fa-arrow-up"></i>
-                                                    </a>
-                                                    <a href="{{ route('admin.contents.move-down', $content->id) }}" class="btn btn-info btn-sm">
-                                                        <i class="fas fa-arrow-down"></i>
-                                                    </a>                                                    
+                                                    @endif                                                  
                                                 </td>
                                             </tr>
                                         @endforeach

@@ -15,6 +15,7 @@
 
 <div class="row">
     <div class="col-md-9">
+        <!--
         <div class="row">
             <div class="col-md-4">
                 <div class="info-box">
@@ -67,7 +68,7 @@
                 </div>
             </div>         
         </div>
-
+        -->
         <div class="row">
             <div class="col-md-12">
                 @if(session('error'))

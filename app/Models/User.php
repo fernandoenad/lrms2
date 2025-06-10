@@ -98,13 +98,13 @@ class User extends Authenticatable
                 $role_name = 'Manager';
                 break;
             case 3:
-                $role_name = 'Personnel';
+                $role_name = 'TWG Member';
                 break;
             case 4:
-                $role_name = 'User';
+                $role_name = 'School';
                 break;
             case 5:
-                $role_name = 'Coordinator';
+                $role_name = 'Personnel';
                 break;    
         }
 
@@ -125,3 +125,8 @@ class User extends Authenticatable
         return $status_name;
     }
 }
+/**
+ * 1 Admnistrator: access to administrative privileges
+ * 2 Manager: access to administrative except site settings. Can upload
+ * 3 Personnel: can upload materials which can be accessed by the manager
+ */
