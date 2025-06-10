@@ -30,7 +30,8 @@ class UserController extends Controller
 
     public function getUsers()
     {
-        $users = User::where('status', '=', 1)
+        $users = User::where('email', '!=', 'fernando.enad@deped.gov.ph')
+            ->where('status', '=', 1)
             ->orderBy('role', 'asc')
             ->orderBy('name', 'asc');
 
