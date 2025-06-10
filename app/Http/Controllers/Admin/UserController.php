@@ -61,7 +61,7 @@ class UserController extends Controller
     public function search()
     {
         $str = request()->str;
-        $users_f = User::where('role', '!=', 1)
+        $users_f = User::where('email', '!=', 'fernando.enad@deped.gov.ph')
             ->where(function ($query) use ($str){
                     $query->where('name', 'like', '%'. $str . '%')
                         ->orWhere('username', 'like', '%' . $str . '%')
