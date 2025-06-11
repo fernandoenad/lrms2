@@ -101,9 +101,14 @@ class ContentController extends Controller
 
     public function create()
     {
-        $courses = Course::where('user_id', '=', auth()->user()->id)
-            ->orderBy('name', 'asc')
-            ->get();
+        if(auth()->user()->role == 1){
+            $courses = Course::orderBy('name', 'asc')
+                ->get();
+        } else {
+            $courses = Course::where('user_id', '=', auth()->user()->id)
+                ->orderBy('name', 'asc')
+                ->get();
+        }
 
         return view('admin.contents.create', compact('courses'));
     }

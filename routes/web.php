@@ -162,6 +162,9 @@ Route::middleware(['active', 'log'])->group(function () {
         Route::patch('/admin/courses/{category}/{course}', [App\Http\Controllers\Admin\CourseController::class, 'update'])->name('admin.courses.update');
         Route::get('/admin/courses/{category}/{course}/move-up', [App\Http\Controllers\Admin\CourseController::class, 'moveup'])->name('admin.courses.move-up');
         Route::get('/admin/courses/{category}/{course}/move-down', [App\Http\Controllers\Admin\CourseController::class, 'movedown'])->name('admin.courses.move-down');
+
+        Route::get('/admin/inventories/', [App\Http\Controllers\Admin\InventoryController::class, 'index'])->name('admin.inventories.index');
+
     });
 
     Route::middleware(['personnel'])->group(function () {

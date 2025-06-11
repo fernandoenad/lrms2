@@ -123,8 +123,12 @@
 						</li> 
 						
 						@if(Auth::user()->role == 1)
-						<li class="nav-item">
-							<a href="" class="nav-link" onClick="alert('Feature not yet available!'); return false;">
+						<li class="nav-item 
+						@if(Route::currentRouteName() == 'admin.inventories.index'
+						
+						) {{ 'menu-open' }} @endif">
+
+							<a href="{{ route('admin.inventories.index') }}" class="nav-link">
 								<i class="nav-icon fas fa-list"></i>
 								<p>Inventory Mgmt</p>
 							</a>

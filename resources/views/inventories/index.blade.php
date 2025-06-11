@@ -38,10 +38,9 @@
                         <thead>
                             <tr>
                                 <th>Title</th>
-                                <th>Level / Area</th>                                
+                                <th>Category / Area</th>                                
                                 <th>LR Type</th>
                                 <th class="text-right">Copies</th>
-                                <th>School Year</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -50,10 +49,9 @@
                             @foreach($inventories as $inventory)
                                 <tr>
                                     <td>{{ $inventory->title ?? '' }}</td>
-                                    <td>{{ $inventory->gradelevel ?? '' }} / {{ $inventory->learningarea ?? '' }}</td>
+                                    <td>{{  App\models\Category::find($inventory->gradelevel)->name }} / {{ $inventory->learningarea ?? '' }}</td>
                                     <td>{{ $inventory->lrtype ?? '' }}</td>
                                     <td class="text-right">{{ $inventory->copies ?? '' }}</td>
-                                    <td>{{ $inventory->schoolyear ?? '' }}</td>
                                     <td class="text-right">
                                         <form method="POST" action="{{ route('inventory.delete', $inventory->id) }}" enctype="multipart/form-data">
                                         @csrf

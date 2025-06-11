@@ -5,6 +5,7 @@ namespace App\Http\Controllers\My;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Inventory;
+use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 
 class InventoryController extends Controller
@@ -24,7 +25,10 @@ class InventoryController extends Controller
 
     public function create()
     {
-        return view('inventories.create');
+        $categories = Category::where('visibility', '=', 1)
+            ->get();
+
+        return view('inventories.create', compact('categories'));
     }
 
     public function store()
@@ -52,7 +56,10 @@ class InventoryController extends Controller
 
     public function edit(Inventory $inventory)
     {
-        return view('inventories.edit', compact('inventory'));
+        $categories = Category::where('visibility', '=', 1)
+            ->get();
+
+        return view('inventories.edit', compact(['inventory','categories']));
     }
 
     public function update(Inventory $inventory)

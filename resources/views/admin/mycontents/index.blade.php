@@ -34,7 +34,8 @@
                         <span class="info-box-text">Shown</span>
                         <span class="info-box-number">
                             <a href="{{ route('admin.mycontents.shown') }}">    
-                                {{ number_format(App\Models\Content::where('contents.user_id', '=', Auth::user()->id)
+                                {{ number_format(App\Models\Content::join('courses', 'courses.id', '=', 'contents.course_id')
+                                    ->where('courses.user_id', '=', Auth::user()->id)
                                     ->where('contents.visibility', '=', 1)
                                     ->get()->count(), 0) }}
                              </a>

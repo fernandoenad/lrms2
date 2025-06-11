@@ -25,12 +25,13 @@
                 <form method="POST" action="{{ route('inventory.store') }}" enctype="multipart/form-data">
                 @csrf
                 @method('POST')
-
+                <input id="schoolyear" readonly type="hidden" class="form-control @error('schoolyear') is-invalid @enderror" name="schoolyear" value="{{ date('Y') }}" autocomplete="schoolyear" autofocus>
+                <!--
                 <div class="form-group row">
                     <label for="schoolyear" class="col-md-3 col-form-label text-md-right">{{ __('School Year') }}</label>
 
                     <div class="col-md-9">
-                        <input id="schoolyear" readonly type="text" class="form-control @error('schoolyear') is-invalid @enderror" name="schoolyear" value="{{ old('schoolyear') ?? 2020 }}" autocomplete="schoolyear" autofocus>
+                        <input id="schoolyear" readonly type="text" class="form-control @error('schoolyear') is-invalid @enderror" name="schoolyear" value="{{ old('schoolyear') ?? date('Y') }}" autocomplete="schoolyear" autofocus>
 
                         @error('schoolyear')
                             <span class="invalid-feedback" role="alert">
@@ -39,6 +40,7 @@
                         @enderror
                     </div>
                 </div>
+                -->
 
                 <div class="form-group row">
                     <label for="title" class="col-md-3 col-form-label text-md-right">{{ __('LR Title') }}</label>
@@ -78,16 +80,14 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="gradelevel" class="col-md-3 col-form-label text-md-right">{{ __('Grade Level') }}</label>
+                    <label for="gradelevel" class="col-md-3 col-form-label text-md-right">{{ __('Category') }}</label>
 
                     <div class="col-md-9">
                         <select id="gradelevel" type="text" class="form-control @error('gradelevel') is-invalid @enderror" name="gradelevel" value="{{ old('gradelevel') }}" autocomplete="gradelevel" autofocus>
                             <option value="">Select</option>
-                            <option value="SPED" @if(old('gradelevel') == 'SPED') {{ 'selected' }} @endif>SPED</option>
-                            <option value="Kindergarten" @if(old('gradelevel') == 'Kindergarten') {{ 'selected' }} @endif>Kindergarten</option>
-                            @for($i=1; $i<=12; $i++)
-                                <option value="Grade {{ $i }}" @if(old('gradelevel') == 'Grade ' . $i) {{ 'selected' }} @endif>Grade {{ $i }}</option>
-                            @endfor
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" @if(old('gradelevel') == $category->id) {{ 'selected' }} @endif>{{ $category->name }}</option>
+                            @endforeach
                         </select>
 
                         @error('gradelevel')
@@ -102,7 +102,7 @@
                     <label for="author" class="col-md-3 col-form-label text-md-right">{{ __('Author') }}</label>
 
                     <div class="col-md-9">
-                        <input id="author" type="text" class="form-control @error('author') is-invalid @enderror" name="author" value="{{ old('author') }}" placeholder="N/A of none." autocomplete="author" autofocus>
+                        <input id="author" type="text" class="form-control @error('author') is-invalid @enderror" name="author" value="{{ old('author') }}" placeholder="N/A for none." autocomplete="author" autofocus>
 
                         @error('author')
                             <span class="invalid-feedback" role="alert">
@@ -116,7 +116,7 @@
                     <label for="publisher" class="col-md-3 col-form-label text-md-right">{{ __('Publisher') }}</label>
 
                     <div class="col-md-9">
-                        <input id="publisher" type="text" class="form-control @error('publisher') is-invalid @enderror" name="publisher" value="{{ old('publisher') }}" placeholder="N/A of none." autocomplete="publisher" autofocus>
+                        <input id="publisher" type="text" class="form-control @error('publisher') is-invalid @enderror" name="publisher" value="{{ old('publisher') }}" placeholder="N/A for none." autocomplete="publisher" autofocus>
 
                         @error('publisher')
                             <span class="invalid-feedback" role="alert">
